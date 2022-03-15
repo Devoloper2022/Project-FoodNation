@@ -11,42 +11,39 @@ import java.util.List;
 
 @Data
 @Entity
-@Table
-public class Staff implements UserDetails {
+public class Customer implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @Column(nullable = false)
     private String firstName;
-    @Column(nullable = false)
+
+    @Column(nullable = true)
     private String secondName;
+
     @Column(nullable = false)
     private String username;
+
     @Column(length = 3000)
     private String password;
 
-
-    @Column(unique = true)
-    private String email;
     @Column(unique = true, length = 10)
     private String phoneNumber;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "roleID", nullable = false)
-//    private Role role;
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Role> roles= new ArrayList<>();
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "localOrganizationID")
-    private LocalOrganization localOrganization;
+    @Column(unique = true)
+    private String email;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer")
+    private List<OrderDetails> orderDetails = new ArrayList<>();
 
     @Transient
     private Collection<? extends GrantedAuthority> authorities;
 
-    public Staff() {
+    public Customer() {
     }
 
-    public Staff(Long id, String username, String password, String email, Collection<? extends GrantedAuthority> authorities) {
+    public Customer(Long id, String username, String password, String email, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -59,29 +56,23 @@ public class Staff implements UserDetails {
         return password;
     }
 
-
-    @Override
-    public String getUsername() {
-        return null;
-    }
-
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return false;
     }
 }

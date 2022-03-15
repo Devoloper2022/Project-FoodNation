@@ -1,64 +1,31 @@
 package com.example.project1.Domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Data;
 
+import javax.persistence.*;
+import java.util.List;
+
+@Data
 @Entity
 public class LocalOrganization {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer ID;
+    private Long id;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String address;
-    private Integer managerID;
+    @OneToOne
+    @JoinColumn(name = "managerID", nullable = false)
+    private Staff manager;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "generalOrganizationID", nullable = false)
+    private GeneralOrganization generalOrganization;
+
+    @OneToMany(mappedBy = "localOrganization")
+    private List<Staff> staffList;
 
     public LocalOrganization() {
     }
-
-    public LocalOrganization(String name, String address, Integer managerID) {
-        this.name = name;
-        this.address = address;
-        this.managerID = managerID;
-    }
-
-    public LocalOrganization(String name, String address) {
-        this.name = name;
-        this.address = address;
-    }
-
-    public Integer getID() {
-        return ID;
-    }
-
-    public void setID(Integer ID) {
-        this.ID = ID;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Integer getManagerID() {
-        return managerID;
-    }
-
-    public void setManagerID(Integer managerID) {
-        this.managerID = managerID;
-    }
-
-
 }

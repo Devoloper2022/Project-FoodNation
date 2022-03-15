@@ -1,52 +1,29 @@
 package com.example.project1.Domain;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Data;
 
+import javax.persistence.*;
+import java.util.List;
+
+@Data
 @Entity
 public class GeneralOrganization {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer ID;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Column(nullable = false)
     private String name;
-    private Integer directorID;
+
+    @OneToOne
+    @JoinColumn(name = "managerID", nullable = false)
+    private Staff director;
+
+
+    @OneToMany(mappedBy = "generalOrganization")
+    private List<LocalOrganization> localOrganizationList;
 
     public GeneralOrganization() {
     }
 
-    public GeneralOrganization(String name, Integer directorID) {
-        this.name = name;
-        this.directorID = directorID;
-    }
-
-    public GeneralOrganization(String name) {
-        this.name = name;
-    }
-
-    public Integer getID() {
-        return ID;
-    }
-
-    public void setID(Integer ID) {
-        this.ID = ID;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getDirectorID() {
-        return directorID;
-    }
-
-    public void setDirectorID(Integer directorID) {
-        this.directorID = directorID;
-    }
 }
