@@ -1,6 +1,6 @@
 package com.example.project1.Security;
 
-import com.example.project1.Domain.Staff;
+import com.example.project1.Domain.User;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,16 +16,17 @@ public class JWTTokenProvider {
     public static final Logger LOG = LoggerFactory.getLogger(JWTTokenProvider.class);
 
     public String generateToken(Authentication authentication) {
-        Staff staff = (Staff) authentication.getPrincipal();
+        User user = (User) authentication.getPrincipal();
         Date now = new Date(System.currentTimeMillis());
         Date expiryDate =new Date(now.getTime()+ SecurityConstants.EXPIRATION_TIME);
-        String userId = Long.toString(staff.getId());
+        String userId = Long.toString(user.getId());
 
         Map<String,Object> claimsMap= new HashMap<>();
         claimsMap.put("id",userId);
-        claimsMap.put("username",staff.getUsername());
-        claimsMap.put("firstname",staff.getFirstName());
-        claimsMap.put("lastname",staff.getSecondName());
+        claimsMap.put("username", user.getUsername());
+        claimsMap.put("firstname", user.getFirstName());
+        claimsMap.put("lastname", user.getSecondName());
+        claimsMap.put("role",user.getRoles());
 
 
         return Jwts.builder()
@@ -37,7 +38,6 @@ public class JWTTokenProvider {
                 .compact();
 
     }
-
 
     public boolean validationToken (String token){
         try {

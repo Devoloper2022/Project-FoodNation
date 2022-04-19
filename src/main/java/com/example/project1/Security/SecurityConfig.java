@@ -1,6 +1,6 @@
 package com.example.project1.Security;
 
-import com.example.project1.Services.CustomStaffDetailsService;
+import com.example.project1.Services.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JWTAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     @Autowired
-    private CustomStaffDetailsService customStaffDetailsService;
+    private CustomUserDetailsService customUserDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(customStaffDetailsService).passwordEncoder(bCryptPasswordEncoder());
+        auth.userDetailsService(customUserDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 
     @Override

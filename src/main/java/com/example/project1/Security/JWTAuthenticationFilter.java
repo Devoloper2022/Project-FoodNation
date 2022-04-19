@@ -1,8 +1,8 @@
 package com.example.project1.Security;
 
 
-import com.example.project1.Domain.Staff;
-import com.example.project1.Services.CustomStaffDetailsService;
+import com.example.project1.Domain.User;
+import com.example.project1.Services.CustomUserDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private JWTTokenProvider jwtTokenProvider;
     @Autowired
-    private CustomStaffDetailsService customStaffDetailsService;
+    private CustomUserDetailsService customUserDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -33,10 +33,10 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             String jwt = getJWTFromRequest(request);
             if (StringUtils.hasText(jwt) && jwtTokenProvider.validationToken(jwt)){
                 Long userId = jwtTokenProvider.getUserIdFromToken(jwt);
-                Staff staffDetails = customStaffDetailsService.loadStaffById(userId);
+                User userDetails = customUserDetailsService.loadUserById(userId);
 
                 UsernamePasswordAuthenticationToken authentication= new UsernamePasswordAuthenticationToken(
-                        staffDetails,null, Collections.emptyList());
+                        userDetails,null, Collections.emptyList());
 
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +18,12 @@ public class OrderDetails {
     @Column(nullable = false)
     private String address;
 
-    @Column(nullable = false)
-    private Time time;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userID", nullable = false)
-    private Customer customer;
+    private User customer;
+
+    @Column(nullable = false)
+    private boolean Status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "localOrganizationID", nullable = false)
@@ -33,7 +32,7 @@ public class OrderDetails {
     @Column(updatable = false)
     private LocalDateTime localDateTime;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "orderDetails")
-    private List<Orders> orderList = new ArrayList<>();
+    private List<OrdersDetails_food> orderList = new ArrayList<>();
 
     public OrderDetails() {
     }

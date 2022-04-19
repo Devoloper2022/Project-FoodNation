@@ -1,7 +1,7 @@
 package com.example.project1.Security;
 
 public class SecurityConstants {
-    public static final String SignUpUrls ="/foodnation/staff/auth/**";
+    public static final String SignUpUrls ="/api/auth/**";
     public static final String SECRET ="SecretKeyGenJVT";
     public static final String TOKEN_PREFIX ="Bearer ";
     public static final String HEADER_STRING ="Authorization";

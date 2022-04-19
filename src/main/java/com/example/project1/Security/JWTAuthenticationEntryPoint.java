@@ -1,6 +1,6 @@
 package com.example.project1.Security;
 
-import com.example.project1.Security.Payload.response.InvalidLoginResponse;
+import com.example.project1.CustomTemplate.Payload.response.InvalidLoginResponse;
 import com.google.gson.Gson;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;

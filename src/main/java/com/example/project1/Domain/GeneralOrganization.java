@@ -15,13 +15,19 @@ public class GeneralOrganization {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = true)
+    private String description;
+
+
     @OneToOne
     @JoinColumn(name = "managerID", nullable = false)
-    private Staff director;
-
+    private User manager;
 
     @OneToMany(mappedBy = "generalOrganization")
     private List<LocalOrganization> localOrganizationList;
+
+    @OneToMany(mappedBy = "organization")
+    private List<Food> foodList;
 
     public GeneralOrganization() {
     }

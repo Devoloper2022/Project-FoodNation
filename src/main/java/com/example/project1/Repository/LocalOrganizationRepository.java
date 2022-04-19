@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface LocalOrganizationRepository extends CrudRepository<LocalOrganization, Long> {
-    LocalOrganization findLocalOrganizationByName(String name);
+    Optional<LocalOrganization> findLocalOrganizationByName(String name);
 
-    LocalOrganization findLocalOrganizationById(Long id);
+    Optional<LocalOrganization> findLocalOrganizationById(Long id);
 }

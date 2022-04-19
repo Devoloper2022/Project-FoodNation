@@ -16,15 +16,22 @@ public class LocalOrganization {
     @Column(nullable = false)
     private String address;
     @OneToOne
-    @JoinColumn(name = "managerID", nullable = false)
-    private Staff manager;
+    @JoinColumn(name = "managerID")
+    private User manager;
+
+    @Column
+    private Integer rate;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "generalOrganizationID", nullable = false)
+    @JoinColumn(name = "generalOrganizationID")
     private GeneralOrganization generalOrganization;
 
+
     @OneToMany(mappedBy = "localOrganization")
-    private List<Staff> staffList;
+    private List<User> userList;
+
+    @OneToMany(mappedBy = "localOrganization")
+    private List<Comment> commentList;
 
     public LocalOrganization() {
     }

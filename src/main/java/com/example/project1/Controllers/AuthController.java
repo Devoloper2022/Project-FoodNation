@@ -1,13 +1,13 @@
 package com.example.project1.Controllers;
 
-import com.example.project1.CustomTemp.Validations.ResponseErrorValidation;
+import com.example.project1.CustomTemplate.Validations.ResponseErrorValidation;
 import com.example.project1.Security.JWTTokenProvider;
-import com.example.project1.Security.Payload.request.LoginRequest;
-import com.example.project1.Security.Payload.request.SignUpRequest;
-import com.example.project1.Security.Payload.response.JWTTokenSuccessResponse;
-import com.example.project1.Security.Payload.response.MessageResponse;
+import com.example.project1.CustomTemplate.Payload.request.LoginRequest;
+import com.example.project1.CustomTemplate.Payload.request.SignUpRequest;
+import com.example.project1.CustomTemplate.Payload.response.JWTTokenSuccessResponse;
+import com.example.project1.CustomTemplate.Payload.response.MessageResponse;
 import com.example.project1.Security.SecurityConstants;
-import com.example.project1.Services.StaffService;
+import com.example.project1.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,7 +24,7 @@ import javax.validation.Valid;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/foodnation/staff/auth")
+@RequestMapping("/api/auth")
 @PreAuthorize("permitAll()")
 public class AuthController {
 
@@ -35,31 +35,28 @@ public class AuthController {
     @Autowired
     private ResponseErrorValidation responseErrorValidation;
     @Autowired
-    private StaffService staffService;
+    private UserService userService;
 
     @PostMapping("/signin")
-    public ResponseEntity<Object> authenticationUser(@Valid @RequestBody LoginRequest loginRequest,BindingResult bindingResult){
-        ResponseEntity<Object> errors =responseErrorValidation.mapValidationService(bindingResult);
-        if (!ObjectUtils.isEmpty(errors))return errors;
-        Authentication authentication =authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+    public ResponseEntity<Object> authenticationUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult bindingResult) {
+        ResponseEntity<Object> errors = responseErrorValidation.mapValidationService(bindingResult);
+        if (!ObjectUtils.isEmpty(errors)) return errors;
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginRequest.getUsername(),
                 loginRequest.getPassword()
         ));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = SecurityConstants.TOKEN_PREFIX+jwtTokenProvider.generateToken(authentication);
-
-        return ResponseEntity.ok(new JWTTokenSuccessResponse(true,jwt));
-
+        String jwt = SecurityConstants.TOKEN_PREFIX + jwtTokenProvider.generateToken(authentication);
+        return ResponseEntity.ok(new JWTTokenSuccessResponse(true, jwt));
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<Object> registerUser(@Valid @RequestBody SignUpRequest signUpRequest, BindingResult bindingResult){
-        ResponseEntity<Object> errors =responseErrorValidation.mapValidationService(bindingResult);
-        if (!ObjectUtils.isEmpty(errors))return errors;
-        staffService.creatStaff(signUpRequest);
+    public ResponseEntity<Object> registerUser(@Valid @RequestBody SignUpRequest signUpRequest, BindingResult bindingResult) {
+        ResponseEntity<Object> errors = responseErrorValidation.mapValidationService(bindingResult);
+        if (!ObjectUtils.isEmpty(errors)) return errors;
+        userService.creatUser(signUpRequest);
         return ResponseEntity.ok(new MessageResponse("User registered successfully"));
     }
-
 
 }
