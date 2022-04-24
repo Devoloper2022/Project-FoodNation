@@ -2,6 +2,8 @@ package com.example.project1.Services;
 
 import com.example.project1.CustomTemplate.Payload.request.StaffAddRequest;
 import com.example.project1.CustomTemplate.exceptions.UserExistException;
+import com.example.project1.Domain.Dictionary.DRole;
+import com.example.project1.Domain.LocalOrganization;
 import com.example.project1.Domain.User;
 import com.example.project1.Repository.GeneralOrganizationRepository;
 import com.example.project1.Repository.LocalOrganizationRepository;
@@ -39,14 +41,17 @@ public class StaffService {
 
     public User creatStaff(StaffAddRequest userIn) {
         User user = new User();
+        DRole role =roleRepository.findById(userIn.getRoleId()).get();
+        LocalOrganization office= localOrganizationRepository.findById(userIn.getOrganizationID()).get();
+
         user.setFirstName(userIn.getFirstName());
         user.setSecondName(userIn.getSecondName());
         user.setUsername(userIn.getUsername());
         user.setPassword(passwordEncoder.encode(userIn.getPassword()));
         user.setEmail(userIn.getEmail());
         user.setPhoneNumber(userIn.getPhoneNumber());
-        user.getRoles().add(roleRepository.findById(userIn.getRoleId()).get());
-        user.setLocalOrganization(localOrganizationRepository.findById(userIn.getOrganizationID()).get());
+        user.getRoles().add(role);
+        user.setLocalOrganization(office);
 
         try {
             LOG.info("Save staff {} ", userIn.getEmail() + " " + userIn.getOrganizationID());

@@ -10,8 +10,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Data
-//@PasswordMatches
-public class GeneralOrganizationSignUpRequest {
+@PasswordMatches
+public class GeneralOrganizationSignUpRequest implements RequestSignUp {
 
     @NotEmpty
     private String name;

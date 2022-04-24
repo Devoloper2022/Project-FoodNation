@@ -11,18 +11,14 @@ import javax.validation.constraints.Size;
 
 @Data
 @PasswordMatches
-public class StaffAddRequest implements RequestSignUp {
-    @Email(message = "It should have email format")
-    @NotBlank(message = "User email is required")
-    @ValidEmail
-    private String email;
-
-    @NotEmpty(message = "Please enter your username")
+public class UserRequest implements RequestSignUp{
+    private Long id;
+    @NotEmpty
+    private String firstname;
+    @NotEmpty
+    private String lastname;
+    @NotEmpty
     private String username;
-    @NotEmpty(message = "Please enter your firstname")
-    private String firstName;
-    @NotEmpty(message = "Please enter your lastname")
-    private String secondName;
 
 
     @NotEmpty(message = "Password is required")
@@ -30,11 +26,9 @@ public class StaffAddRequest implements RequestSignUp {
     private String password;
     private String confirmPassword;
 
-
-    @NotEmpty(message = "Please enter your phone number")
-    @Size(min = 9, max = 11)
+    @Email(message = "It should have email format")
+    @NotBlank(message = "User email is required")
+    @ValidEmail
+    private String email;
     private String phoneNumber;
-
-    private Long roleId;
-    private Long organizationID;
 }

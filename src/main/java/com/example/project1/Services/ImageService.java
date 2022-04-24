@@ -1,28 +1,28 @@
 package com.example.project1.Services;
 
-import com.example.project1.Domain.Food;
-import com.example.project1.Domain.GeneralOrganization;
-import com.example.project1.Domain.ImageModel;
-import com.example.project1.Domain.User;
-import com.example.project1.Repository.GeneralOrganizationRepository;
-import com.example.project1.Repository.ImageModelRepository;
-import com.example.project1.Repository.UserRepository;
-import lombok.SneakyThrows;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.security.Principal;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.zip.Deflater;
-import java.util.zip.Inflater;
+//import com.example.project1.Domain.Food;
+//import com.example.project1.Domain.GeneralOrganization;
+//import com.example.project1.Domain.ImageModel;
+//import com.example.project1.Domain.User;
+//import com.example.project1.Repository.GeneralOrganizationRepository;
+//import com.example.project1.Repository.ImageModelRepository;
+//import com.example.project1.Repository.UserRepository;
+//import lombok.SneakyThrows;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.core.userdetails.UsernameNotFoundException;
+//import org.springframework.stereotype.Service;
+//import org.springframework.util.ObjectUtils;
+//import org.springframework.web.multipart.MultipartFile;
+//
+//import java.io.ByteArrayOutputStream;
+//import java.io.IOException;
+//import java.security.Principal;
+//import java.util.stream.Collector;
+//import java.util.stream.Collectors;
+//import java.util.zip.Deflater;
+//import java.util.zip.Inflater;
 
 //@Service
 //public class ImageService {

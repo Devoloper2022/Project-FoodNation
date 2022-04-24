@@ -1,8 +1,7 @@
 package com.example.project1.Services;
 
 import com.example.project1.CustomTemplate.Payload.request.GeneralOrganizationSignUpRequest;
-import com.example.project1.CustomTemplate.exceptions.GeneralOrganizationExistException;
-import com.example.project1.CustomTemplate.exceptions.GeneralOrganizationNotFoundException;
+import com.example.project1.CustomTemplate.exceptions.ExceptionText;
 import com.example.project1.Domain.Dictionary.DRole;
 import com.example.project1.Domain.GeneralOrganization;
 import com.example.project1.Domain.LocalOrganization;
@@ -59,7 +58,9 @@ public class GeneralOrganizationService {
         user.getRoles().add(ceo);
         user.getRoles().add(manager);
         //Saving user into DB and getting with ID
+
         User founder=userRepository.save(user);
+        LOG.info("Save general Organization user with name" + genOrg.getName(), user.getUsername());
 
 
         //Creating gen org
@@ -74,20 +75,16 @@ public class GeneralOrganizationService {
         localOrganization.setName(genOrg.getName());
         localOrganization.setRate(0);
         localOrganization.setAddress(genOrg.getAddress());
+        localOrganization.setManager(founder);
+        localOrganization.setGeneralOrganization(organization);
         //Saving local org into DB and get with ID
         LocalOrganization office=localOrganizationRepository.save(localOrganization);
 
 
-
-//        user.setLocalOrganization(office);
-
-        //Updating local org due to creation user
-        office.setManager(founder);
-//        office.getUserList().add(founder);
-        office.setGeneralOrganization(organization);
         //Updating local org due to creation gen org
         office=localOrganizationRepository.save(office);
 
+        //Updating founder due to creation office
         founder.setLocalOrganization(office);
         founder=userRepository.save(founder);
 
@@ -98,7 +95,7 @@ public class GeneralOrganizationService {
             return generalOrganizationRepository.save(generalOrganization);
         } catch (Exception ex) {
             LOG.error("Error during creation ", ex.getMessage());
-            throw new GeneralOrganizationExistException("The general organization " + generalOrganization.getName() + " already exist.Please check your credentials");
+            throw new ExceptionText("The general organization " + generalOrganization.getName() + " already exist.Please check your credentials");
         }
     }
 
@@ -120,7 +117,7 @@ public class GeneralOrganizationService {
         User user = getUserByPrincipal(principal);
         return generalOrganizationRepository.findById(user.getLocalOrganization().getGeneralOrganization().getId())
                 .orElseThrow(() ->
-                        new GeneralOrganizationNotFoundException
+                        new ExceptionText
                                 ("General Organization cannot be found for user: " + user.getUsername()));
     }
 

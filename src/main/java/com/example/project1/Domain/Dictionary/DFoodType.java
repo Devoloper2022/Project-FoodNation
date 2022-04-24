@@ -13,7 +13,7 @@ public class DFoodType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String role;
+    private String name;
     @ManyToMany(fetch = FetchType.LAZY,mappedBy = "foodTypes")
     private List<Food> foods;
 

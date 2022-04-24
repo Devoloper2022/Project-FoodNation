@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 
 @Data
 @PasswordMatches
-public class SignUpRequest {
+public class SignUpRequest implements RequestSignUp {
 
     @Email(message = "It should have email format")
     @NotBlank(message = "User email is required")

@@ -38,12 +38,13 @@ public class FoodController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Object> registerUser(@Valid @RequestBody FoodDTO foodDTO, BindingResult bindingResult, Principal principal) {
+    public ResponseEntity<Object> addFood(@Valid @RequestBody FoodDTO foodDTO, BindingResult bindingResult, Principal principal) {
         ResponseEntity<Object> errors = responseErrorValidation.mapValidationService(bindingResult);
         if (!ObjectUtils.isEmpty(errors)) return errors;
         foodService.createFood(foodDTO, principal);
         return ResponseEntity.ok(new MessageResponse("Staff added successfully"));
     }
+
 
 
 }
