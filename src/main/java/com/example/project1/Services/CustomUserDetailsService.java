@@ -23,12 +23,20 @@ public class CustomUserDetailsService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        User user = userRepository.findUserByUsername(username)
+//                .orElseThrow(() -> new UsernameNotFoundException("This is" + username + " username not foud"));
+//        return build(user);
+//    }
+
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findUserByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("This is" + username + " username not foud"));
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findUserByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("This is" + email + " email not foud"));
         return build(user);
     }
+
 
     public User loadUserById(Long id){
         return userRepository.findUserById(id)
