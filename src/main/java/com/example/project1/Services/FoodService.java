@@ -44,7 +44,7 @@ public class FoodService {
         food.setDescription(foodDTO.getDescription());
         food.setPrice(foodDTO.getPrice());
         food.setRate(0);
-        food.getFoodTypes().addAll(convertLongToFoodType(foodDTO));
+        food.getFoodTypes().addAll(foodDTO.getListType());
         food.setOrganization(organization);
 
         LOG.info("Create food {}", organization.getId());
@@ -59,15 +59,17 @@ public class FoodService {
         return foodRepository.findFoodByOrganization(id);
     }
 
-    private Set<DFoodType> convertLongToFoodType(FoodDTO dto){
-        Set<DFoodType> types=new HashSet<>();
-        Iterator<Long> i=dto.getListType().iterator();
-        while(i.hasNext())
-        {
-            types.add(foodTypeRepository.findById(i.next()).get());
-        }
-        return types;
-    }
+//    private Set<DFoodType> convertLongToFoodType(FoodDTO dto){
+//        Set<DFoodType> types=new HashSet<>();
+//
+//        Iterator i = dto.getListType().iterator();
+//        while(i.hasNext())
+//        {
+//            DFoodType foodType =foodTypeRepository.findById((Long) i.next()).get();
+//            types.add(foodType);
+//        }
+//        return types;
+//    }
 
     private User getUserByPrincipal(Principal principal) {
         String username = principal.getName();

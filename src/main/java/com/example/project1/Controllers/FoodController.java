@@ -42,8 +42,10 @@ public class FoodController {
         ResponseEntity<Object> errors = responseErrorValidation.mapValidationService(bindingResult);
         if (!ObjectUtils.isEmpty(errors)) return errors;
         foodService.createFood(foodDTO, principal);
-        return ResponseEntity.ok(new MessageResponse("Staff added successfully"));
+        return ResponseEntity.ok(new MessageResponse("Food added successfully"));
     }
+
+
 
 
 
