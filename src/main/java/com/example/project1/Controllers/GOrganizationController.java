@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/go")
@@ -50,4 +52,15 @@ public class GOrganizationController {
         GOrganizationDTO organizationUpdated = organizationFacade.GOtoGODTO(organization);
         return new ResponseEntity<>(organizationUpdated, HttpStatus.OK);
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<GOrganizationDTO>> getListGenOrg(Principal principal) {
+       List<GOrganizationDTO> goDTOList=organizationService.getListGenOrg()
+               .stream()
+               .map(organizationFacade::GOtoGODTO)
+               .collect(Collectors.toList());
+
+       return new ResponseEntity<>(goDTOList,HttpStatus.OK);
+    }
+
 }

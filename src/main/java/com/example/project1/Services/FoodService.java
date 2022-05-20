@@ -1,11 +1,11 @@
 package com.example.project1.Services;
 
-import com.example.project1.Domain.Dictionary.DFoodType;
 import com.example.project1.Domain.Food;
 import com.example.project1.Domain.GeneralOrganization;
 import com.example.project1.Domain.User;
 import com.example.project1.Repository.FoodTypeRepository;
-import com.example.project1.Repository.FoodsRepository;
+import com.example.project1.Repository.FoodRepository;
+import com.example.project1.Repository.GeneralOrganizationRepository;
 import com.example.project1.Repository.UserRepository;
 import com.example.project1.dto.FoodDTO;
 import org.slf4j.Logger;
@@ -15,10 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class FoodService {
@@ -26,14 +23,16 @@ public class FoodService {
 
 
     private final FoodTypeRepository foodTypeRepository;
-    private final FoodsRepository foodRepository;
+    private final FoodRepository foodRepository;
     private final UserRepository userRepository;
+    private final GeneralOrganizationRepository GORepository;
 
     @Autowired
-    public FoodService(FoodTypeRepository foodTypeRepository, FoodsRepository foodRepository, UserRepository userRepository) {
+    public FoodService(FoodTypeRepository foodTypeRepository, FoodRepository foodRepository, UserRepository userRepository, GeneralOrganizationRepository goRepository) {
         this.foodTypeRepository = foodTypeRepository;
         this.foodRepository = foodRepository;
         this.userRepository = userRepository;
+        GORepository = goRepository;
     }
 
 
@@ -55,8 +54,14 @@ public class FoodService {
         return foodRepository.findFoodById(id).get();
     }
 
-    public List<Food> getMenu(Long id){
-        return foodRepository.findFoodByOrganization(id);
+    public List<Food> getAll(){
+        return (List<Food>) foodRepository.findAll();
+    }
+
+    public List<Food> getMenuOrg(Long id){
+        GeneralOrganization organization = GORepository.findById(id).get();
+//        return organization.getFoodList();
+        return foodRepository.findFoodsByOrganization(organization);
     }
 
 //    private Set<DFoodType> convertLongToFoodType(FoodDTO dto){

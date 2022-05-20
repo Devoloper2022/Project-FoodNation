@@ -22,7 +22,7 @@ public class User implements UserDetails {
     private String firstName;
     @Column(nullable = false)
     private String secondName;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
     @Column(length = 3000)
     private String password;
@@ -40,6 +40,10 @@ public class User implements UserDetails {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "localOrganizationID")
     private LocalOrganization localOrganization;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "generalOrganizationID")
+    private GeneralOrganization generalOrganization;
 
     @Transient
     private Collection<? extends GrantedAuthority> authorities;

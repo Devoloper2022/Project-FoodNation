@@ -29,6 +29,9 @@ public class GeneralOrganization {
     @OneToMany(mappedBy = "organization")
     private List<Food> foodList;
 
+    @OneToMany(mappedBy = "generalOrganization")
+    private List<User> userList;
+
     public GeneralOrganization() {
     }
 

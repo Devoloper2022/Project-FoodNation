@@ -131,6 +131,7 @@ public class GeneralOrganizationService {
 
     private User getUserByPrincipal(Principal principal) {
         String username = principal.getName();
+        System.out.println("Sonik "+username);
         return userRepository.findUserByUsername(username)
                 .orElseThrow(() -> new
                         UsernameNotFoundException("User not found with username: " + username));

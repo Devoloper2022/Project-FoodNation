@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
@@ -46,7 +48,24 @@ public class FoodController {
     }
 
 
+    @GetMapping("/all")
+    public ResponseEntity<List<FoodDTO>> getListFood() {
+        List<FoodDTO> foodDTOList=foodService.getAll()
+                .stream()
+                .map(foodFacade::foodToFoodDTO)
+                .collect(Collectors.toList());
 
+        return new ResponseEntity<>(foodDTOList,HttpStatus.OK);
+    }
 
+    @GetMapping("/all/{orgId}")
+    public ResponseEntity<List<FoodDTO>> getListFoodOrgId(@PathVariable("orgId") String orgId) {
+        List<FoodDTO> foodDTOList=foodService.getMenuOrg(Long.parseLong(orgId))
+                .stream()
+                .map(foodFacade::foodToFoodDTO)
+                .collect(Collectors.toList());
+
+        return new ResponseEntity<>(foodDTOList,HttpStatus.OK);
+    }
 
 }

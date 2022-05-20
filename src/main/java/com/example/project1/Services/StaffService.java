@@ -3,6 +3,7 @@ package com.example.project1.Services;
 import com.example.project1.CustomTemplate.Payload.request.StaffAddRequest;
 import com.example.project1.CustomTemplate.exceptions.UserExistException;
 import com.example.project1.Domain.Dictionary.DRole;
+import com.example.project1.Domain.GeneralOrganization;
 import com.example.project1.Domain.LocalOrganization;
 import com.example.project1.Domain.User;
 import com.example.project1.Repository.GeneralOrganizationRepository;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.List;
 
 @Service
 public class StaffService {
@@ -88,6 +90,24 @@ public class StaffService {
 
     public User getCurrentUser(Principal principal) {
         return getUserByPrincipal(principal);
+    }
+
+    public List<User> getListGO(Principal principal){
+        User user = getUserByPrincipal(principal);
+        GeneralOrganization org=user.getLocalOrganization().getGeneralOrganization();
+
+        return  userRepository.findAllByGeneralOrganization(org.getId());
+    }
+
+    public List<User> getListLO(Principal principal){
+        User user = getUserByPrincipal(principal);
+        LocalOrganization org=user.getLocalOrganization();
+
+        return  userRepository.findAllByGeneralOrganization(org.getId());
+    }
+
+    public List<User> getListLOById(Long id){
+        return  userRepository.findAllByGeneralOrganization(id);
     }
 
     private User getUserByPrincipal(Principal principal) {

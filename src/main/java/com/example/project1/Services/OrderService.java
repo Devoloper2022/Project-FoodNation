@@ -23,15 +23,15 @@ public class OrderService {
     private final OrderDetailsRepository orderDetAilsRepository;
     private final OrdersRepository ordersRepository;
     private final LocalOrganizationRepository organizationRepository;
-    private final FoodsRepository foodsRepository;
+    private final FoodRepository foodRepository;
 
     @Autowired
-    public OrderService(UserRepository userRepository, OrderDetailsRepository orderDetAilsRepository, OrdersRepository ordersRepository, LocalOrganizationRepository organizationRepository, FoodsRepository foodsRepository) {
+    public OrderService(UserRepository userRepository, OrderDetailsRepository orderDetAilsRepository, OrdersRepository ordersRepository, LocalOrganizationRepository organizationRepository, FoodRepository foodRepository) {
         this.userRepository = userRepository;
         this.orderDetAilsRepository = orderDetAilsRepository;
         this.ordersRepository = ordersRepository;
         this.organizationRepository = organizationRepository;
-        this.foodsRepository = foodsRepository;
+        this.foodRepository = foodRepository;
     }
 
     public OrderDetails create(OrderDTO orderDTO, Principal principal) {
@@ -63,7 +63,7 @@ public class OrderService {
         OrderDetails details = orderDetAilsRepository.findById(id).get();
         for (CartItem i : cart) {
             OrdersDetails_food orders = new OrdersDetails_food();
-            Food food = foodsRepository.findFoodById(i.getItemId()).get();
+            Food food = foodRepository.findFoodById(i.getItemId()).get();
             orders.setMenu(food);
             orders.setAmountOfMenu(i.getAmountItem());
             orders.setOrderDetails(details);
