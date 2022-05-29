@@ -21,6 +21,8 @@ public class Food {
     private String description;
     @Column
     private Integer price;
+    @Column(columnDefinition = "text")
+    private String urlImage;
 
     @ManyToMany
     private Set<DFoodType> foodTypes =new HashSet<>();
@@ -28,7 +30,7 @@ public class Food {
     @Column(length = 2)
     private Integer rate;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "menu")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "food")
     private List<OrdersDetails_food> orderList = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.EAGER)

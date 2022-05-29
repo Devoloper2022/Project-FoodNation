@@ -1,20 +1,21 @@
 package com.example.project1.Domain.Dictionary;
 
-import com.example.project1.Domain.LocalOrganization;
+import com.example.project1.Domain.User;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @Entity
 @Table
-public class DOrganizationType {
+public class DPosition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String type;
+    private String position;
 
-    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "category")
-    private List<LocalOrganization> organizations;
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "positions")
+    List<User> users = new ArrayList<>();
 }

@@ -3,11 +3,13 @@ package com.example.project1.Controllers;
 
 import com.example.project1.CustomTemplate.Payload.response.MessageResponse;
 import com.example.project1.CustomTemplate.Validations.ResponseErrorValidation;
+import com.example.project1.Domain.Dictionary.DFoodType;
 import com.example.project1.Domain.Food;
 import com.example.project1.Facade.FoodFacade;
 import com.example.project1.Services.FoodService;
 import com.example.project1.dto.FoodDTO;
 
+import com.example.project1.dto.FoodTypeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,6 +68,24 @@ public class FoodController {
                 .collect(Collectors.toList());
 
         return new ResponseEntity<>(foodDTOList,HttpStatus.OK);
+    }
+
+
+    @GetMapping("/type")
+    public ResponseEntity<List<FoodTypeDTO>> getListTypeId() {
+        List<FoodTypeDTO> typeDTOList=foodService.getAllFoodType()
+                .stream()
+                .map(foodFacade::foodToFoodTypeDTO)
+                .collect(Collectors.toList());
+
+        return new ResponseEntity<>(typeDTOList,HttpStatus.OK);
+    }
+
+    @GetMapping("/type/{id}")
+    public ResponseEntity<FoodTypeDTO> getListTypeId(@PathVariable("id") String id) {
+        DFoodType type = foodService.getFoodTypeByID(Long.parseLong(id));
+        FoodTypeDTO typeDTO = foodFacade.foodToFoodTypeDTO(type);
+        return new ResponseEntity<>(typeDTO, HttpStatus.OK);
     }
 
 }

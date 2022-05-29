@@ -1,5 +1,6 @@
 package com.example.project1.Domain;
 
+import com.example.project1.Domain.Dictionary.DPosition;
 import com.example.project1.Domain.Dictionary.DRole;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,10 +19,9 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
+    @Column
     private String firstName;
-    @Column(nullable = false)
+    @Column
     private String secondName;
     @Column(nullable = false, unique = true)
     private String username;
@@ -33,9 +34,14 @@ public class User implements UserDetails {
     @Column(unique = true, length = 10)
     private String phoneNumber;
 
+    @Column(columnDefinition = "text")
+    private String urlImage;
 
     @ManyToMany
     private Set<DRole> roles =new HashSet<>();
+
+    @ManyToMany
+    private Set<DPosition> positions = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "localOrganizationID")
@@ -44,6 +50,13 @@ public class User implements UserDetails {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "generalOrganizationID")
     private GeneralOrganization generalOrganization;
+
+    @OneToMany(mappedBy = "customer")
+    private List<OrderDetails> orderList;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Reservation> reservationList;
+
 
     @Transient
     private Collection<? extends GrantedAuthority> authorities;
@@ -63,7 +76,6 @@ public class User implements UserDetails {
     public String getPassword() {
         return password;
     }
-
 
     @Override
     public boolean isAccountNonExpired() {

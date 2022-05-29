@@ -12,14 +12,7 @@ public class Token {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(length = 350)
     private String Token;
-
-    private Date startTime;
-
-    private Date endTime;
-
-    private String Status;
-
-
+    private boolean Status;
 }

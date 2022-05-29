@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Data
 @Entity
 @Table
@@ -17,6 +18,6 @@ public class DRole {
     private Long id;
     private String role;
 
-    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "roles")
-    List<User> users=new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "roles")
+    List<User> users = new ArrayList<>();
 }

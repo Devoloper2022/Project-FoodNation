@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/lo")
@@ -28,14 +30,14 @@ public class LOrganizationController {
     private ResponseErrorValidation responseErrorValidation;
 
     @GetMapping("/")
-    public ResponseEntity<LOrganizationDTO> getCurrentLocalOrg(Principal principal) {
+    public ResponseEntity<LOrganizationDTO> getLocalOrgProfile(Principal principal) {
         LocalOrganization organization = organizationService.getCurrentLocalOrg(principal);
         LOrganizationDTO organizationDTO = organizationFacade.LOtoLODTO(organization);
         return new ResponseEntity<>(organizationDTO, HttpStatus.OK);
     }
 
     @GetMapping("/{orgId}")
-    public ResponseEntity<LOrganizationDTO> getLocalOrgProfile(@PathVariable("orgId") String orgId) {
+    public ResponseEntity<LOrganizationDTO> getLocalOrgById(@PathVariable("orgId") String orgId) {
         LocalOrganization organization = organizationService.getLocalOrgByID(Long.parseLong(orgId));
         LOrganizationDTO orgDTO = organizationFacade.LOtoLODTO(organization);
         return new ResponseEntity<>(orgDTO, HttpStatus.OK);
@@ -51,10 +53,19 @@ public class LOrganizationController {
     }
 
     @PostMapping("/org/create")
-    public ResponseEntity<Object> registerGenOrg(@Valid @RequestBody LOrganizationDTO localDTO, BindingResult bindingResult ,Principal principal) {
+    public ResponseEntity<Object> registerGenOrg(@Valid @RequestBody LOrganizationDTO localDTO, BindingResult bindingResult, Principal principal) {
         ResponseEntity<Object> errors = responseErrorValidation.mapValidationService(bindingResult);
         if (!ObjectUtils.isEmpty(errors)) return errors;
-        organizationService.created(localDTO,principal);
+        organizationService.created(localDTO, principal);
         return ResponseEntity.ok(new MessageResponse("Local Organization created successfully"));
+    }
+
+    @GetMapping("/all/{genID}")
+    public ResponseEntity<List<LOrganizationDTO>> getListByGenId(@PathVariable("genID") String genID) {
+        List<LOrganizationDTO> loDTOList=organizationService.listByGenID(Long.parseLong(genID))
+                .stream()
+                .map(organizationFacade::LOtoLODTO)
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(loDTOList,HttpStatus.OK);
     }
 }

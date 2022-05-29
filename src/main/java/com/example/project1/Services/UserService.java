@@ -34,6 +34,7 @@ public class UserService {
 
 
     public User creatUser(SignUpRequest userIn) {
+
         User user = new User();
         user.setFirstName(userIn.getFirstName());
         user.setSecondName(userIn.getSecondName());
@@ -41,11 +42,10 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(userIn.getPassword()));
         user.setEmail(userIn.getEmail());
         user.setPhoneNumber(userIn.getPhoneNumber());
+        user.setUrlImage(userIn.getUrlImage());
         user =userRepository.save(user);
 
-        DRole role = roleRepository.findByRole("User").get();
-        LOG.info("Save user {} ", role);
-        user.getRoles().add(role);
+        user.getRoles().add(roleRepository.findByRole("User").get());
 
         try {
             LOG.info("Save user {} ", userIn.getEmail());
@@ -57,19 +57,22 @@ public class UserService {
     }
 
     public User updateUser(UserDTO userDTO, Principal principal) {
+
         User user = getUserByPrincipal(principal);
         user.setFirstName(userDTO.getFirstname());
         user.setSecondName(userDTO.getLastname());
         user.setUsername(userDTO.getUsername());
         user.setPhoneNumber(userDTO.getPhoneNumber());
         user.setEmail(userDTO.getEmail());
+        user.setUrlImage(userDTO.getUrlImage());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
 
         LOG.info("Update user {} ", userDTO.getEmail());
         return userRepository.save(user);
-
     }
 
     public User getCurrentUser(Principal principal) {
+
         return getUserByPrincipal(principal);
     }
 

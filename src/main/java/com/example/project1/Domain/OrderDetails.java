@@ -7,6 +7,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Data
@@ -22,12 +23,19 @@ public class OrderDetails {
     @JoinColumn(name = "userID", nullable = false)
     private User customer;
 
-    @Column(nullable = false)
+    @Column
     private boolean Status;
 
+    private int totalCost;
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "localOrganizationID")
+//    private LocalOrganization localOrganization;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "localOrganizationID", nullable = false)
-    private LocalOrganization localOrganization;
+    @JoinColumn(name = "GenOrganizationID", nullable = false)
+    private GeneralOrganization genOrganization;
+
     @JsonFormat(pattern = "yyyy-mm-dd HH:mm:ss")
     @Column(updatable = false)
     private LocalDateTime localDateTime;
@@ -36,4 +44,11 @@ public class OrderDetails {
 
     public OrderDetails() {
     }
+
+    @PrePersist
+    protected void onCreate(){
+        this.localDateTime =LocalDateTime.now();
+    }
+
+
 }

@@ -1,12 +1,14 @@
 package com.example.project1.Controllers;
 
 import com.example.project1.CustomTemplate.Validations.ResponseErrorValidation;
+import com.example.project1.Domain.Token;
 import com.example.project1.Security.JWTTokenProvider;
 import com.example.project1.CustomTemplate.Payload.request.LoginRequest;
 import com.example.project1.CustomTemplate.Payload.request.SignUpRequest;
 import com.example.project1.CustomTemplate.Payload.response.JWTTokenSuccessResponse;
 import com.example.project1.CustomTemplate.Payload.response.MessageResponse;
 import com.example.project1.Security.SecurityConstants;
+import com.example.project1.Services.TokenService;
 import com.example.project1.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +38,8 @@ public class AuthController {
     private ResponseErrorValidation responseErrorValidation;
     @Autowired
     private UserService userService;
+    @Autowired
+    private TokenService tokenService;
 
     @PostMapping("/signin")
     public ResponseEntity<Object> authenticationUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult bindingResult) {
@@ -46,9 +50,7 @@ public class AuthController {
                 loginRequest.getPassword()
         ));
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = SecurityConstants.TOKEN_PREFIX + jwtTokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new JWTTokenSuccessResponse(true, jwt));
+        return  ResponseEntity.ok(tokenService.creat(authentication));
     }
 
     @PostMapping("/signup")

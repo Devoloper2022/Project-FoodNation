@@ -1,6 +1,7 @@
 package com.example.project1.Domain;
 
 
+import com.example.project1.Domain.Dictionary.DOrganizationType;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,19 +19,25 @@ public class GeneralOrganization {
     @Column(nullable = true)
     private String description;
 
+    @Column(columnDefinition = "text")
+    private String urlImage;
+
 
     @OneToOne
     @JoinColumn(name = "managerID", nullable = false)
     private User manager;
 
     @OneToMany(mappedBy = "generalOrganization")
-    private List<LocalOrganization> localOrganizationList;
+    private List<LocalOrganization> filialBranchList;
 
     @OneToMany(mappedBy = "organization")
-    private List<Food> foodList;
+    private List<Food> menu;
 
     @OneToMany(mappedBy = "generalOrganization")
-    private List<User> userList;
+    private List<User> staffList;
+
+    @OneToMany(mappedBy = "genOrganization")
+    private List<OrderDetails> orderList;
 
     public GeneralOrganization() {
     }

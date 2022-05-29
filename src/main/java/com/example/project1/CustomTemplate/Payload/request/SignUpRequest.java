@@ -21,19 +21,18 @@ public class SignUpRequest implements RequestSignUp {
 
     @NotEmpty(message = "Please enter your username")
     private String username;
-    @NotEmpty(message = "Please enter your firstname")
+
     private String firstName;
-    @NotEmpty(message = "Please enter your lastname")
+
     private String secondName;
 
+    private String urlImage;
 
     @NotEmpty(message = "Password is required")
     @Size(min = 6, max = 10)
     private String password;
     private String confirmPassword;
 
-
-    @NotEmpty(message = "Please enter your phone number")
     @Size(min = 9, max = 11)
     private String phoneNumber;
 }

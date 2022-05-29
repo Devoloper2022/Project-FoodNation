@@ -14,6 +14,9 @@ public class DFoodType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @Column(columnDefinition = "text")
+    private String urlImage;
     @ManyToMany(fetch = FetchType.LAZY,mappedBy = "foodTypes")
     private List<Food> foods;
 

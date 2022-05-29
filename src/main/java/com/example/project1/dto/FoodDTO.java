@@ -1,6 +1,6 @@
 package com.example.project1.dto;
 
-import com.example.project1.Domain.Dictionary.DFoodType;
+
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
@@ -15,5 +15,6 @@ public class FoodDTO {
     private String description;
     private Integer price;
     private Integer rate;
-    private Set<DFoodType> listType =new HashSet<>();
+    private String urlImage;
+    private Set<Long> listType =new HashSet<>();
 }

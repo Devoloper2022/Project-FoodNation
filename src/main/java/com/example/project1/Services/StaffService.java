@@ -2,14 +2,13 @@ package com.example.project1.Services;
 
 import com.example.project1.CustomTemplate.Payload.request.StaffAddRequest;
 import com.example.project1.CustomTemplate.exceptions.UserExistException;
+import com.example.project1.Domain.Dictionary.DFoodType;
+import com.example.project1.Domain.Dictionary.DPosition;
 import com.example.project1.Domain.Dictionary.DRole;
 import com.example.project1.Domain.GeneralOrganization;
 import com.example.project1.Domain.LocalOrganization;
 import com.example.project1.Domain.User;
-import com.example.project1.Repository.GeneralOrganizationRepository;
-import com.example.project1.Repository.LocalOrganizationRepository;
-import com.example.project1.Repository.RoleRepository;
-import com.example.project1.Repository.UserRepository;
+import com.example.project1.Repository.*;
 import com.example.project1.dto.StaffDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +18,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class StaffService {
@@ -27,24 +29,29 @@ public class StaffService {
 
     private final UserRepository userRepository;
     private final LocalOrganizationRepository localOrganizationRepository;
+    private final PositionRepository posRepository;
     private final GeneralOrganizationRepository generalOrganizationRepository;
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
 
     @Autowired
-    public StaffService(UserRepository userRepository, LocalOrganizationRepository localOrganizationRepository, GeneralOrganizationRepository generalOrganizationRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder) {
+    public StaffService(UserRepository userRepository, LocalOrganizationRepository localOrganizationRepository, PositionRepository posRepository, GeneralOrganizationRepository generalOrganizationRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.localOrganizationRepository = localOrganizationRepository;
+        this.posRepository = posRepository;
         this.generalOrganizationRepository = generalOrganizationRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User creatStaff(StaffAddRequest userIn) {
+    public User creatStaff(StaffAddRequest userIn , Principal principal) {
         User user = new User();
-        DRole role =roleRepository.findById(userIn.getRoleId()).get();
-        LocalOrganization office= localOrganizationRepository.findById(userIn.getOrganizationID()).get();
+
+        DRole role =roleRepository.findByRole("Staff").get();
+
+        User chief=getUserByPrincipal(principal);
+        LocalOrganization office= localOrganizationRepository.findById(chief.getLocalOrganization().getId()).get();
 
         user.setFirstName(userIn.getFirstName());
         user.setSecondName(userIn.getSecondName());
@@ -53,10 +60,12 @@ public class StaffService {
         user.setEmail(userIn.getEmail());
         user.setPhoneNumber(userIn.getPhoneNumber());
         user.getRoles().add(role);
+        user.setPositions(convertLongToPosition(userIn.getPositionId()));
+        user.setUrlImage(userIn.getUrlImage());
         user.setLocalOrganization(office);
 
         try {
-            LOG.info("Save staff {} ", userIn.getEmail() + " " + userIn.getOrganizationID());
+            LOG.info("Save staff {} ", userIn.getEmail() + " " + office.getId());
             return userRepository.save(user);
         } catch (Exception ex) {
             LOG.error("Error during creation of staff", ex.getMessage());
@@ -66,21 +75,14 @@ public class StaffService {
 
     public User updateStaff(StaffDTO staffDTO, Principal principal) {
         User user = getUserByPrincipal(principal);
+        user.setPassword(passwordEncoder.encode(staffDTO.getPassword()));
         user.setFirstName(staffDTO.getFirstname());
         user.setSecondName(staffDTO.getLastname());
         user.setPhoneNumber(staffDTO.getPhoneNumber());
-
-        LOG.info("Update user {} ", staffDTO.getEmail());
-        return userRepository.save(user);
-    }
-
-    public User updateRole(StaffDTO staffDTO) {
-        User user = userRepository.findUserById(staffDTO.getId()).get();
-        user.setUsername(staffDTO.getUsername());
         user.setEmail(staffDTO.getEmail());
-        user.getRoles().addAll(staffDTO.getRole());
-
-        LOG.info("Update role user {} of ", staffDTO.getEmail());
+        user.setPositions(convertLongToPosition(staffDTO.getPositionID()));
+        user.setUrlImage(staffDTO.getUrlImage());
+        LOG.info("Update user {} ", staffDTO.getEmail());
         return userRepository.save(user);
     }
 
@@ -92,22 +94,38 @@ public class StaffService {
         return getUserByPrincipal(principal);
     }
 
+
+
     public List<User> getListGO(Principal principal){
         User user = getUserByPrincipal(principal);
         GeneralOrganization org=user.getLocalOrganization().getGeneralOrganization();
 
-        return  userRepository.findAllByGeneralOrganization(org.getId());
+        return  userRepository.findAllByGeneralOrganization(org);
     }
 
     public List<User> getListLO(Principal principal){
         User user = getUserByPrincipal(principal);
         LocalOrganization org=user.getLocalOrganization();
 
-        return  userRepository.findAllByGeneralOrganization(org.getId());
+        return  userRepository.findAllByLocalOrganization(org);
     }
 
     public List<User> getListLOById(Long id){
-        return  userRepository.findAllByGeneralOrganization(id);
+        LocalOrganization organization = localOrganizationRepository.findById(id).get();
+        return  userRepository.findAllByLocalOrganization(organization);
+    }
+
+
+    private Set<DPosition> convertLongToPosition(Set<Long> list) {
+        Set<DPosition> positions = new HashSet<>();
+
+        Iterator<Long> i = list.iterator();
+        while (i.hasNext()) {
+            DPosition position = posRepository.findById(i.next().longValue()).get();
+            positions.add(position);
+        }
+
+        return positions;
     }
 
     private User getUserByPrincipal(Principal principal) {

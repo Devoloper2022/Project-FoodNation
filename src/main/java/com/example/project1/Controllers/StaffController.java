@@ -53,14 +53,6 @@ public class StaffController {
         return new ResponseEntity<>(userUpdated, HttpStatus.OK);
     }
 
-    @PostMapping("/update/role")
-    public  ResponseEntity<Object> updateStaffRole(@Valid @RequestBody StaffDTO staffDTO, BindingResult bindingResult, Principal principal){
-        ResponseEntity<Object> errors = responseErrorValidation.mapValidationService(bindingResult);
-        if (!ObjectUtils.isEmpty(errors)) return errors;
-        User user= staffService.updateRole(staffDTO);
-        UserDTO userUpdated = userFacade.userToUserDTO(user);
-        return new ResponseEntity<>(userUpdated, HttpStatus.OK);
-    }
 
     @GetMapping("/all/go")
     public ResponseEntity<List<StaffDTO>> getListGenOrg(Principal principal) {

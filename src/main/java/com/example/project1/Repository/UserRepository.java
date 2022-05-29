@@ -1,6 +1,8 @@
 package com.example.project1.Repository;
 
 
+import com.example.project1.Domain.GeneralOrganization;
+import com.example.project1.Domain.LocalOrganization;
 import com.example.project1.Domain.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -16,7 +18,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     Optional<User> findUserById(Long id);
 
-    List<User> findAllByGeneralOrganization(Long id);
+    List<User> findAllByGeneralOrganization(GeneralOrganization gen);
 
-    List<User> findAllByLocalOrganization(Long id);
+    List<User> findAllByLocalOrganization(LocalOrganization local);
 }

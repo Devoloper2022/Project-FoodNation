@@ -8,6 +8,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Data
 @PasswordMatches
@@ -23,6 +24,7 @@ public class StaffAddRequest implements RequestSignUp {
     private String firstName;
     @NotEmpty(message = "Please enter your lastname")
     private String secondName;
+    private String urlImage;
 
 
     @NotEmpty(message = "Password is required")
@@ -35,6 +37,5 @@ public class StaffAddRequest implements RequestSignUp {
     @Size(min = 9, max = 11)
     private String phoneNumber;
 
-    private Long roleId;
-    private Long organizationID;
+    private Set<Long> positionId;
 }

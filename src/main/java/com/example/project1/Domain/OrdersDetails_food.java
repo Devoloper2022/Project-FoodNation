@@ -12,9 +12,9 @@ public class OrdersDetails_food {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "menuID", nullable = false)
-    private Food menu;
-    private Integer amountOfMenu;
+    @JoinColumn(name = "foodID", nullable = false)
+    private Food food;
+    private Integer pcs; //amount of food
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "orderDetailsID", nullable = false)
     private OrderDetails orderDetails;

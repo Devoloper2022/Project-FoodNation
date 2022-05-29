@@ -15,6 +15,7 @@ public class GOrganizationFacade {
         organizationDTO.setName(organization.getName());
         organizationDTO.setDescription(organization.getDescription());
         organizationDTO.setManagerID(organization.getManager().getId());
+        organizationDTO.setUrlImage(organization.getUrlImage());
 
         return organizationDTO;
     }

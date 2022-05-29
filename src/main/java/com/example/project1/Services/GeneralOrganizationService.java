@@ -2,14 +2,13 @@ package com.example.project1.Services;
 
 import com.example.project1.CustomTemplate.Payload.request.GeneralOrganizationSignUpRequest;
 import com.example.project1.CustomTemplate.exceptions.ExceptionText;
+import com.example.project1.Domain.Dictionary.DOrganizationType;
+import com.example.project1.Domain.Dictionary.DPosition;
 import com.example.project1.Domain.Dictionary.DRole;
 import com.example.project1.Domain.GeneralOrganization;
 import com.example.project1.Domain.LocalOrganization;
 import com.example.project1.Domain.User;
-import com.example.project1.Repository.GeneralOrganizationRepository;
-import com.example.project1.Repository.LocalOrganizationRepository;
-import com.example.project1.Repository.RoleRepository;
-import com.example.project1.Repository.UserRepository;
+import com.example.project1.Repository.*;
 import com.example.project1.dto.GOrganizationDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,14 +29,18 @@ public class GeneralOrganizationService {
     private final LocalOrganizationRepository localOrganizationRepository;
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final PositionRepository positionRepository;
+    private final OrganizationTypeRepository typeRepository;
 
     @Autowired
-    public GeneralOrganizationService(GeneralOrganizationRepository generalOrganizationRepository, UserRepository userRepository, LocalOrganizationRepository localOrganizationRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder) {
+    public GeneralOrganizationService(GeneralOrganizationRepository generalOrganizationRepository, UserRepository userRepository, LocalOrganizationRepository localOrganizationRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder, PositionRepository positionRepository, OrganizationTypeRepository typeRepository) {
         this.generalOrganizationRepository = generalOrganizationRepository;
         this.userRepository = userRepository;
         this.localOrganizationRepository = localOrganizationRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.positionRepository = positionRepository;
+        this.typeRepository = typeRepository;
     }
 
     public GeneralOrganization created(GeneralOrganizationSignUpRequest genOrg) {
@@ -45,8 +48,10 @@ public class GeneralOrganizationService {
         GeneralOrganization generalOrganization = new GeneralOrganization();
         LocalOrganization localOrganization = new LocalOrganization();
         User user = new User();
-        DRole ceo = roleRepository.findByRole("CEO").get();
-        DRole manager = roleRepository.findByRole("Manager").get();
+
+        DPosition ceo = positionRepository.findByPosition("CEO").get();
+        DPosition manager = positionRepository.findByPosition("Manager").get();
+        DRole staff = roleRepository.findByRole("Staff").get();
 
         //Creation user
         user.setEmail(genOrg.getEmail());
@@ -55,12 +60,13 @@ public class GeneralOrganizationService {
         user.setSecondName(genOrg.getSecondName());
         user.setPassword(passwordEncoder.encode(genOrg.getPassword()));
         user.setPhoneNumber(genOrg.getPhoneNumber());
-        user.getRoles().add(ceo);
-        user.getRoles().add(manager);
+        user.getPositions().add(ceo);
+        user.getPositions().add(manager);
+        user.getRoles().add(staff);
         //Saving user into DB and getting with ID
 
-        User founder=userRepository.save(user);
-        LOG.info("Save general Organization user with name" + genOrg.getName(), user.getUsername());
+        User founder = userRepository.save(user);
+        LOG.info("Save GO CEO with name" + genOrg.getName(), user.getUsername());
 
 
         //Creating gen org
@@ -68,26 +74,28 @@ public class GeneralOrganizationService {
         generalOrganization.setDescription(genOrg.getDescription());
         generalOrganization.setManager(founder);
         //Saving gen org into DB and getting with ID
-        GeneralOrganization organization=generalOrganizationRepository.save(generalOrganization);
-
+        GeneralOrganization organization = generalOrganizationRepository.save(generalOrganization);
+        founder.setGeneralOrganization(organization);
 
         //Creation local org
+        DOrganizationType category = typeRepository.findById(genOrg.getCategoryID()).get();
+
         localOrganization.setName(genOrg.getName());
         localOrganization.setRate(0);
         localOrganization.setAddress(genOrg.getAddress());
         localOrganization.setManager(founder);
         localOrganization.setGeneralOrganization(organization);
+        localOrganization.getCategory().add(category); //
         //Saving local org into DB and get with ID
-        LocalOrganization office=localOrganizationRepository.save(localOrganization);
+        LocalOrganization office = localOrganizationRepository.save(localOrganization);
 
 
         //Updating local org due to creation gen org
-        office=localOrganizationRepository.save(office);
+        office = localOrganizationRepository.save(office);
 
         //Updating founder due to creation office
         founder.setLocalOrganization(office);
-        founder=userRepository.save(founder);
-
+        founder = userRepository.save(founder);
 
 
         try {
@@ -109,6 +117,7 @@ public class GeneralOrganizationService {
 
         organization.setName(organizationDTO.getName());
         organization.setDescription(organizationDTO.getDescription());
+        organization.setUrlImage(organizationDTO.getUrlImage());
 
         return organization;
     }
@@ -131,7 +140,6 @@ public class GeneralOrganizationService {
 
     private User getUserByPrincipal(Principal principal) {
         String username = principal.getName();
-        System.out.println("Sonik "+username);
         return userRepository.findUserByUsername(username)
                 .orElseThrow(() -> new
                         UsernameNotFoundException("User not found with username: " + username));

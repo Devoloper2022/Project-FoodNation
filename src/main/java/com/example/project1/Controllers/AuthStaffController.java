@@ -10,6 +10,7 @@ import com.example.project1.Security.JWTTokenProvider;
 import com.example.project1.Security.SecurityConstants;
 import com.example.project1.Services.GeneralOrganizationService;
 import com.example.project1.Services.StaffService;
+import com.example.project1.Services.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,6 +23,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @CrossOrigin
 @RestController
@@ -38,6 +40,8 @@ public class AuthStaffController {
     private StaffService staffService;
     @Autowired
     private GeneralOrganizationService generalOrganizationService;
+    @Autowired
+    private TokenService tokenService;
 
     @PostMapping("/staff/signin")
     public ResponseEntity<Object> authenticationUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult bindingResult) {
@@ -48,9 +52,7 @@ public class AuthStaffController {
                 loginRequest.getPassword()
         ));
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = SecurityConstants.TOKEN_PREFIX + jwtTokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new JWTTokenSuccessResponse(true, jwt));
+        return  ResponseEntity.ok(tokenService.creat(authentication));
     }
 
     @PostMapping("/org/signup")
@@ -62,10 +64,10 @@ public class AuthStaffController {
     }
 
     @PostMapping("/staff/add")
-    public ResponseEntity<Object> registerUser(@Valid @RequestBody StaffAddRequest signUpRequest, BindingResult bindingResult) {
+    public ResponseEntity<Object> registerUser(@Valid @RequestBody StaffAddRequest signUpRequest, BindingResult bindingResult, Principal principal) {
         ResponseEntity<Object> errors = responseErrorValidation.mapValidationService(bindingResult);
         if (!ObjectUtils.isEmpty(errors)) return errors;
-        staffService.creatStaff(signUpRequest);
+        staffService.creatStaff(signUpRequest,principal);
         return ResponseEntity.ok(new MessageResponse("Staff added successfully"));
     }
 }

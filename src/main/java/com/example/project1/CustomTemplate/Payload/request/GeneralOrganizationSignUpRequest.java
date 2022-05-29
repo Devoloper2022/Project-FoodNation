@@ -17,6 +17,8 @@ public class GeneralOrganizationSignUpRequest implements RequestSignUp {
     private String name;
     private String description;
     private String address;
+    private Long categoryID;
+    private String urlImage;
 
 
     @Email(message = "It should have email format")
