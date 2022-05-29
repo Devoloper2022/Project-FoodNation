@@ -13,8 +13,11 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>Project1</name>
     <description>Project1</description>
+<!--    <properties>-->
+<!--        <java.version>11</java.version>-->
+<!--    </properties>-->
     <properties>
-        <java.version>11</java.version>
+        <java.version>1.8</java.version>
     </properties>
     <dependencies>
         <!--Security -->
