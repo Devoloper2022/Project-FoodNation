@@ -65,7 +65,7 @@ public class LocalOrganizationService {
         localOrganization.setGeneralOrganization(genOrg);
         localOrganization.setCategory(convertLongToOrgType(localOrgDTO.getCategoryID()));
         localOrganization.setUrlImage(localOrgDTO.getUrlImage());
-        localOrganization.setRate(0);
+        localOrganization.setRate(0.0);
         localOrganization.setCounter(0);
 
 
@@ -120,9 +120,9 @@ public class LocalOrganizationService {
         if (checkUser.isPresent()){
             return org;
         }else {
-            Integer sum =org.getRate() * org.getCounter() + rate.getRate();
+            Double sum =org.getRate() * org.getCounter() + rate.getRate();
             Integer users=  org.getCounter() + 1;
-            Integer result=sum/users;
+            Double result=sum/users;
 
             org.setRate(result);
             org.setCounter(users);
