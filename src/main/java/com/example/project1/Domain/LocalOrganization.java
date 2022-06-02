@@ -48,7 +48,7 @@ public class LocalOrganization {
 
     // for rating
     @Column
-    private Integer rate;
+    private Double rate;
     @Column
     private Integer counter;
 

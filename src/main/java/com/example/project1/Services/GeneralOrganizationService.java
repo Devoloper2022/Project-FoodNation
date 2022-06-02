@@ -82,7 +82,7 @@ public class GeneralOrganizationService {
         DOrganizationType category = typeRepository.findById(genOrg.getCategoryID()).get();
 
         localOrganization.setName(genOrg.getName());
-        localOrganization.setRate(0);
+        localOrganization.setRate(0.0);
         localOrganization.setAddress(genOrg.getAddress());
         localOrganization.setManager(founder);
         localOrganization.setGeneralOrganization(organization);
