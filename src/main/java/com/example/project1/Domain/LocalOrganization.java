@@ -25,6 +25,10 @@ public class LocalOrganization {
     @Column
     private Integer rate;
 
+
+    @Column(columnDefinition = "text")
+    private String urlImage;
+
     @ManyToMany
     private Set<DOrganizationType> category = new HashSet<>();
 

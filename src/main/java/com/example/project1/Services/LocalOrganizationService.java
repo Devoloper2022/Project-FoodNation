@@ -62,6 +62,7 @@ public class LocalOrganizationService {
         localOrganization.setManager(manager);
         localOrganization.setGeneralOrganization(genOrg);
         localOrganization.setCategory(convertLongToOrgType(localOrgDTO.getCategoryID()));
+        localOrganization.setUrlImage(localOrgDTO.getUrlImage());
         localOrganization.setRate(0);
 
 

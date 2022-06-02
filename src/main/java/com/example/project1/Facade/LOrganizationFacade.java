@@ -20,6 +20,7 @@ public class LOrganizationFacade {
         lOrganizationDTO.setManagerID(organization.getManager().getId());
         lOrganizationDTO.setGeneralOrganizationID(organization.getGeneralOrganization().getId());
         lOrganizationDTO.setCategoryID(convertOrgTypeToLong(organization.getCategory()));
+        lOrganizationDTO.setUrlImage(lOrganizationDTO.getUrlImage());
 
         return lOrganizationDTO;
     }

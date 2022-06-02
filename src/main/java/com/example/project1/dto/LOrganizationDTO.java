@@ -12,6 +12,7 @@ public class LOrganizationDTO {
     @NotEmpty
     private String address;
     private Long managerID;
+    private String urlImage;
     private Long generalOrganizationID;
     private Set<Long> categoryID;
 
