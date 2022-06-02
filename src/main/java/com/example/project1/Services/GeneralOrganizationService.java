@@ -87,6 +87,7 @@ public class GeneralOrganizationService {
         localOrganization.setManager(founder);
         localOrganization.setGeneralOrganization(organization);
         localOrganization.setUrlImage(genOrg.getUrlImage());
+        localOrganization.setCounter(0);
         localOrganization.getCategory().add(category); //
         //Saving local org into DB and get with ID
         LocalOrganization office = localOrganizationRepository.save(localOrganization);

@@ -8,6 +8,7 @@ import com.example.project1.Domain.LocalOrganization;
 
 import com.example.project1.Domain.User;
 import com.example.project1.Repository.*;
+import com.example.project1.dto.ItemDTO;
 import com.example.project1.dto.LOrganizationDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +43,7 @@ public class LocalOrganizationService {
         this.orgTypeRepository = orgTypeRepository;
     }
 
+
     public LocalOrganization created(LOrganizationDTO localOrgDTO, Principal principal){
 
         User ceo=getUserByPrincipal(principal);
@@ -64,6 +66,7 @@ public class LocalOrganizationService {
         localOrganization.setCategory(convertLongToOrgType(localOrgDTO.getCategoryID()));
         localOrganization.setUrlImage(localOrgDTO.getUrlImage());
         localOrganization.setRate(0);
+        localOrganization.setCounter(0);
 
 
         LOG.info("Saving Local Organization for organization" + genOrg.getId());
@@ -106,11 +109,37 @@ public class LocalOrganizationService {
         return localOrganizationRepository.save(localOrg);
     }
 
+    public LocalOrganization rateOrg(ItemDTO rate,Principal principal){
+        User user=getUserByPrincipal(principal);
+        LocalOrganization org=localOrganizationRepository.findLocalOrganizationById(rate.getOrgID()).get();
+
+        Optional<String> checkUser=org.getRatedUser()
+                .stream()
+                .filter(u->u.equals(user.getUsername())).findAny();
+
+        if (checkUser.isPresent()){
+            return org;
+        }else {
+            Integer sum =org.getRate() * org.getCounter() + rate.getRate();
+            Integer users=  org.getCounter() + 1;
+            Integer result=sum/users;
+
+            org.setRate(result);
+            org.setCounter(users);
+            org.getRatedUser().add(user.getUsername());
+        }
+
+        return localOrganizationRepository.save(org);
+    }
+
     public List<LocalOrganization> listByGenID(Long genID){
         GeneralOrganization genOrg=generalOrganizationRepository.findGeneralOrganizationById(genID).get();
         return localOrganizationRepository.findByGeneralOrganization(genOrg);
     }
 
+    public List<LocalOrganization> getAll(){
+        return (List<LocalOrganization>) localOrganizationRepository.findAll();
+    }
 
     private Set<DOrganizationType> convertLongToOrgType(Set<Long> list) {
         Set<DOrganizationType> types = new HashSet<>();

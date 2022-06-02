@@ -13,6 +13,8 @@ public class LOrganizationDTO {
     private String address;
     private Long managerID;
     private String urlImage;
+    private Integer Rate;
+    private Integer users;
     private Long generalOrganizationID;
     private Set<Long> categoryID;
 

@@ -76,6 +76,7 @@ public class UserService {
         return getUserByPrincipal(principal);
     }
 
+
     private User getUserByPrincipal(Principal principal) {
         String username = principal.getName();
         return userRepository.findUserByUsername(username)

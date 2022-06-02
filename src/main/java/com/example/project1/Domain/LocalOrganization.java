@@ -22,10 +22,6 @@ public class LocalOrganization {
     @JoinColumn(name = "managerID")
     private User manager;
 
-    @Column
-    private Integer rate;
-
-
     @Column(columnDefinition = "text")
     private String urlImage;
 
@@ -40,6 +36,7 @@ public class LocalOrganization {
     @OneToMany(mappedBy = "localOrganization")
     private List<User> StaffList;
 
+
     @OneToMany(mappedBy = "localOrganization")
     private List<Comment> commentList;
 
@@ -49,6 +46,16 @@ public class LocalOrganization {
     @OneToMany(mappedBy = "localOrganization")
     private List<Reservation> reservationList;
 
+    // for rating
+    @Column
+    private Integer rate;
+    @Column
+    private Integer counter;
+
+    @ElementCollection(targetClass = String.class)
+    private Set<String> ratedUser=new HashSet<>();
+
     public LocalOrganization() {
     }
+
 }
