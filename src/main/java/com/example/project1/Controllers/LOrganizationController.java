@@ -5,6 +5,7 @@ import com.example.project1.CustomTemplate.Validations.ResponseErrorValidation;
 import com.example.project1.Domain.LocalOrganization;
 import com.example.project1.Facade.LOrganizationFacade;
 import com.example.project1.Services.LocalOrganizationService;
+import com.example.project1.dto.ItemDTO;
 import com.example.project1.dto.LOrganizationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -60,6 +61,16 @@ public class LOrganizationController {
         return ResponseEntity.ok(new MessageResponse("Local Organization created successfully"));
     }
 
+
+    @GetMapping("/all")
+    public ResponseEntity<List<LOrganizationDTO>> getListLO() {
+        List<LOrganizationDTO> loDTOList=organizationService.getAll()
+                .stream()
+                .map(organizationFacade::LOtoLODTO)
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(loDTOList,HttpStatus.OK);
+    }
+
     @GetMapping("/all/{genID}")
     public ResponseEntity<List<LOrganizationDTO>> getListByGenId(@PathVariable("genID") String genID) {
         List<LOrganizationDTO> loDTOList=organizationService.listByGenID(Long.parseLong(genID))
@@ -67,5 +78,15 @@ public class LOrganizationController {
                 .map(organizationFacade::LOtoLODTO)
                 .collect(Collectors.toList());
         return new ResponseEntity<>(loDTOList,HttpStatus.OK);
+    }
+
+    @PostMapping("/rate")
+    public ResponseEntity<Object> rate(@Valid @RequestBody ItemDTO rateDTO, BindingResult bindingResult, Principal principal) {
+        ResponseEntity<Object> errors = responseErrorValidation.mapValidationService(bindingResult);
+        if (!ObjectUtils.isEmpty(errors)) return errors;
+
+        LocalOrganization organization = organizationService.rateOrg(rateDTO,principal);
+        LOrganizationDTO organizationUpdated = organizationFacade.LOtoLODTO(organization);
+        return new ResponseEntity<>(organizationUpdated, HttpStatus.OK);
     }
 }
