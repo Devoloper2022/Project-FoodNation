@@ -5,7 +5,9 @@ import com.example.project1.Domain.Dictionary.DOrganizationType;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -22,6 +24,8 @@ public class GeneralOrganization {
     @Column(columnDefinition = "text")
     private String urlImage;
 
+    @ElementCollection(targetClass = String.class)
+    private Set<String> category=new HashSet<>();
 
     @OneToOne
     @JoinColumn(name = "managerID", nullable = false)

@@ -16,6 +16,6 @@ public class LOrganizationDTO {
     private Double Rate;
     private Integer users;
     private Long generalOrganizationID;
-    private Set<Long> categoryID;
+    private Long categoryID;
 
 }

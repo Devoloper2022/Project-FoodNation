@@ -6,8 +6,9 @@ import com.example.project1.CustomTemplate.Validations.ResponseErrorValidation;
 import com.example.project1.Domain.OrderDetails;
 import com.example.project1.Facade.OrderFacade;
 import com.example.project1.Services.OrderService;
-import com.example.project1.dto.FoodDTO;
 import com.example.project1.dto.OrderDTO;
+import com.example.project1.dto.ReservationDTO;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/order")
+@RequestMapping("/api/service/order")
 public class OrderController {
     @Autowired
     private OrderService orderService;
@@ -33,9 +34,12 @@ public class OrderController {
 
 
     @PostMapping("/add")
-    public ResponseEntity<Object> addFood(@Valid @RequestBody OrderDTO orderDTO, BindingResult bindingResult, Principal principal) {
+    public ResponseEntity<Object> addOrder(@Valid @RequestBody String s, BindingResult bindingResult, Principal principal) {
         ResponseEntity<Object> errors = responseErrorValidation.mapValidationService(bindingResult);
         if (!ObjectUtils.isEmpty(errors)) return errors;
+        System.out.println("Sonik "+s);
+        Gson gson=new Gson();
+        OrderDTO orderDTO=gson.fromJson(s,OrderDTO.class);
         System.out.println("Sonik "+orderDTO);
         orderService.create(orderDTO, principal);
         return ResponseEntity.ok(new MessageResponse("Order created successfully"));
@@ -44,7 +48,7 @@ public class OrderController {
 
     @GetMapping("/all")
     public ResponseEntity<List<OrderDTO>> getListFood(Principal principal) {
-        List<OrderDTO> orderDTO=orderService.getAllOrders(principal)
+        List<OrderDTO> orderDTO= orderService.getAllUserOrders(principal)
                 .stream()
                 .map(orderFacade::orderToOrderDTO)
                 .collect(Collectors.toList());

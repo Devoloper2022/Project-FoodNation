@@ -63,6 +63,7 @@ public class StaffService {
         user.setPositions(convertLongToPosition(userIn.getPositionId()));
         user.setUrlImage(userIn.getUrlImage());
         user.setLocalOrganization(office);
+        user.setGeneralOrganization(office.getGeneralOrganization());
 
         try {
             LOG.info("Save staff {} ", userIn.getEmail() + " " + office.getId());
@@ -75,6 +76,7 @@ public class StaffService {
 
     public User updateStaff(StaffDTO staffDTO, Principal principal) {
         User user = getUserByPrincipal(principal);
+
         user.setPassword(passwordEncoder.encode(staffDTO.getPassword()));
         user.setFirstName(staffDTO.getFirstname());
         user.setSecondName(staffDTO.getLastname());
@@ -82,6 +84,7 @@ public class StaffService {
         user.setEmail(staffDTO.getEmail());
         user.setPositions(convertLongToPosition(staffDTO.getPositionID()));
         user.setUrlImage(staffDTO.getUrlImage());
+
         LOG.info("Update user {} ", staffDTO.getEmail());
         return userRepository.save(user);
     }

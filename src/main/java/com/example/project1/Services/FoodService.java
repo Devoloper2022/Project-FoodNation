@@ -43,12 +43,15 @@ public class FoodService {
 
     public Food createFood(FoodDTO foodDTO, Principal principal) {
         GeneralOrganization organization = getUserByPrincipal(principal).getLocalOrganization().getGeneralOrganization();
+       DFoodType foodType=foodTypeRepository.findById(foodDTO.getListType()).get();
+
         Food food = new Food();
         food.setTitle(foodDTO.getTitle());
         food.setDescription(foodDTO.getDescription());
         food.setPrice(foodDTO.getPrice());
         food.setRate(0);
-        food.setFoodTypes(convertLongToFoodType(foodDTO.getListType()));
+//        food.setFoodTypes(convertLongToFoodType(foodDTO.getListType()));
+        food.setFoodTypes(foodType);
         food.setOrganization(organization);
         food.setUrlImage(foodDTO.getUrlImage());
 
@@ -67,12 +70,14 @@ public class FoodService {
     public Food updateFood(FoodDTO foodDTO, Principal principal){
         GeneralOrganization genOrganization=getUserByPrincipal(principal).getGeneralOrganization();
         Food food= foodRepository.findById(foodDTO.getId()).get();
+        DFoodType foodType=foodTypeRepository.findById(foodDTO.getId()).get();
 
         food .setDescription(foodDTO.getDescription());
         food.setOrganization(genOrganization);
         food.setPrice(foodDTO.getPrice());
         food.setTitle(foodDTO.getTitle());
-        food.setFoodTypes(convertLongToFoodType(foodDTO.getListType()));
+        //        food.setFoodTypes(convertLongToFoodType(foodDTO.getListType()));
+        food.setFoodTypes(foodType);
         food.setUrlImage(foodDTO.getUrlImage());
 
         return  foodRepository.save(food);
@@ -90,14 +95,18 @@ public class FoodService {
         return foodRepository.findFoodByFoodTypes(foodType);
     }
 
+
     public List<DFoodType> getAllFoodType() {
 
         return (List<DFoodType>) foodTypeRepository.findAll();
     }
 
+
     public DFoodType getFoodTypeByID(Long id){
         return  foodTypeRepository.findById(id).get();
     }
+
+
     private Set<DFoodType> convertLongToFoodType(Set<Long> list) {
         Set<DFoodType> types = new HashSet<>();
 
@@ -109,6 +118,7 @@ public class FoodService {
 
         return types;
     }
+
 
     private User getUserByPrincipal(Principal principal) {
         String username = principal.getName();

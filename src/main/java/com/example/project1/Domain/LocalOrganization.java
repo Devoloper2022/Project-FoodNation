@@ -25,8 +25,8 @@ public class LocalOrganization {
     @Column(columnDefinition = "text")
     private String urlImage;
 
-    @ManyToMany
-    private Set<DOrganizationType> category = new HashSet<>();
+    @ManyToOne
+    private DOrganizationType category;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "generalOrganizationID")
@@ -45,6 +45,9 @@ public class LocalOrganization {
 
     @OneToMany(mappedBy = "localOrganization")
     private List<Reservation> reservationList;
+
+    @ElementCollection(targetClass = String.class)
+    private Set<String> checkTime=new HashSet<>();
 
     // for rating
     @Column

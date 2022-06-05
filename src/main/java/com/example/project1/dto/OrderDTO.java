@@ -1,9 +1,8 @@
 package com.example.project1.dto;
 
-import com.example.project1.Domain.Additional.CartItem;
-import lombok.Data;
 
-import javax.validation.constraints.NotEmpty;
+import com.google.gson.JsonObject;
+import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -17,5 +16,5 @@ public class OrderDTO {
     private Long orgID;
     private int totalCost;
     private LocalDateTime localDateTime;
-   private Map Cart;
+   private Map<Long,Long> Cart;
 }

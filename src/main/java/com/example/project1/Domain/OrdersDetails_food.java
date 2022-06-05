@@ -14,7 +14,7 @@ public class OrdersDetails_food {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "foodID", nullable = false)
     private Food food;
-    private Integer pcs; //amount of food
+    private Long pcs; //amount of food
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "orderDetailsID", nullable = false)
     private OrderDetails orderDetails;

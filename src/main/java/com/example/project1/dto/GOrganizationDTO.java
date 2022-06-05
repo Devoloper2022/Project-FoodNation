@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
+import java.util.Set;
 
 @Data
 public class GOrganizationDTO {
@@ -13,4 +14,5 @@ public class GOrganizationDTO {
     private String description;
     private String urlImage;
     private Long managerID;
+    private Set<String> category;
 }

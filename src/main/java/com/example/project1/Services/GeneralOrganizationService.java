@@ -52,6 +52,7 @@ public class GeneralOrganizationService {
         DPosition ceo = positionRepository.findByPosition("CEO").get();
         DPosition manager = positionRepository.findByPosition("Manager").get();
         DRole staff = roleRepository.findByRole("Staff").get();
+        DOrganizationType orgType=typeRepository.findById(genOrg.getCategoryID()).get();
 
         //Creation user
         user.setEmail(genOrg.getEmail());
@@ -74,6 +75,7 @@ public class GeneralOrganizationService {
         generalOrganization.setDescription(genOrg.getDescription());
         generalOrganization.setManager(founder);
         generalOrganization.setUrlImage(genOrg.getUrlImage());
+        generalOrganization.getCategory().add(orgType.getType());
         //Saving gen org into DB and getting with ID
         GeneralOrganization organization = generalOrganizationRepository.save(generalOrganization);
         founder.setGeneralOrganization(organization);
@@ -88,7 +90,7 @@ public class GeneralOrganizationService {
         localOrganization.setGeneralOrganization(organization);
         localOrganization.setUrlImage(genOrg.getUrlImage());
         localOrganization.setCounter(0);
-        localOrganization.getCategory().add(category); //
+        localOrganization.setCategory(orgType); //
         //Saving local org into DB and get with ID
         LocalOrganization office = localOrganizationRepository.save(localOrganization);
 

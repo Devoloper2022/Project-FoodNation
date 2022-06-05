@@ -22,6 +22,8 @@ public class Reservation {
     @Column(nullable = false)
     private boolean Status;
 
+    private  String date;
+
     @JsonFormat(pattern = "yyyy-mm-dd HH:mm:ss")
     private LocalDateTime localDateTime;
 

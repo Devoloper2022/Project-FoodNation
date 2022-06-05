@@ -2,7 +2,6 @@ package com.example.project1.Services;
 
 
 import com.example.project1.Domain.*;
-import com.example.project1.Domain.Additional.CartItem;
 import com.example.project1.Repository.*;
 import com.example.project1.dto.OrderDTO;
 import org.slf4j.Logger;
@@ -45,25 +44,28 @@ public class OrderService {
 
         details = orderDetAilsRepository.save(details);
 
-//        details.setOrderList(createCard(details.getId(), orderDTO.getCart()));
         createCard(details.getId(), orderDTO.getCart());
 
         LOG.info("Order {} ", user.getEmail() + " " + details.getId());
         return orderDetAilsRepository.save(details);
     }
 
-//    public OrderDetails update(OrderDTO orderDTO,Principal principal){
-//
-//    }
+    public OrderDetails changeStatus(Long id){
 
-    public  OrderDetails getByID(Long id){
+        OrderDetails order=orderDetAilsRepository.findById(id).get();
+        order.setStatus(true);
+        return  orderDetAilsRepository.save(order);
+    }
+
+    public OrderDetails getByID(Long id) {
         return orderDetAilsRepository.findById(id).get();
     }
 
-    public List<OrderDetails> getAllOrders(Principal principal){
-        User user=getUserByPrincipal(principal);
-        return  orderDetAilsRepository.findByCustomerOrderByLocalDateTimeDesc(user);
+    public List<OrderDetails> getAllUserOrders(Principal principal) {
+        User user = getUserByPrincipal(principal);
+        return orderDetAilsRepository.findByCustomerOrderByLocalDateTimeDesc(user);
     }
+
 
     private User getUserByPrincipal(Principal principal) {
         String username = principal.getName();
@@ -72,49 +74,23 @@ public class OrderService {
                         UsernameNotFoundException("User not found with username: " + username));
     }
 
-//    private List<OrdersDetails_food> createCard(Long id, List<CartItem> cart) {
-//        List<OrdersDetails_food> list = new ArrayList<>();
-//
-//        OrderDetails details = orderDetAilsRepository.findById(id).get();
-//
-//        for (CartItem i : cart) {
-//            OrdersDetails_food orders = new OrdersDetails_food();
-//            Food food = foodRepository.findFoodById(i.getItemId()).get();
-//            orders.setFood(food);
-//            orders.setPcs(i.getAmountItem());
-//            orders.setOrderDetails(details);
-//            orders = ordersRepository.save(orders);
-//
-//            list.add(orders);
-//
-//        }
-//        return list;
-//    }
+    private void createCard(Long id, Map<Long, Long> cart) {
+        List<OrdersDetails_food> list = new ArrayList<>();
 
-    private void createCard(Long id, Map<String,String> cart) {
         OrderDetails details = orderDetAilsRepository.findById(id).get();
-        System.out.println("Sonik "+cart);
-        Set set=cart.entrySet();
-        Iterator<CartItem> i = set.iterator();
+
+        System.out.println("Sonik " + cart);
+        Set set = cart.entrySet();
+        Iterator<Map> i = set.iterator();
+
         while (i.hasNext()) {
-            Map.Entry entry=(Map.Entry)i.next();
+            Map.Entry entry = (Map.Entry) i.next();
             OrdersDetails_food orders = new OrdersDetails_food();
-            Food food = foodRepository.findFoodById(Long.parseLong((String) entry.getKey())).get();
+            Food food = foodRepository.findFoodById((Long) entry.getKey()).get();
             orders.setFood(food);
-            orders.setPcs((Integer) entry.getValue());
+            orders.setPcs((Long) entry.getValue());
             orders.setOrderDetails(details);
             ordersRepository.save(orders);
         }
-//        for (CartItem i : cart) {
-//            OrdersDetails_food orders = new OrdersDetails_food();
-//            Food food = foodRepository.findFoodById(i.getItemId()).get();
-//            orders.setFood(food);
-//            orders.setPcs(i.getAmountItem());
-//            orders.setOrderDetails(details);
-//            orders = ordersRepository.save(orders);
-//        }
-
     }
-
-
 }

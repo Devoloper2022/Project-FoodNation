@@ -24,8 +24,8 @@ public class Food {
     @Column(columnDefinition = "text")
     private String urlImage;
 
-    @ManyToMany
-    private Set<DFoodType> foodTypes =new HashSet<>();
+    @ManyToOne
+    private DFoodType foodTypes;
 
     @Column(length = 2)
     private Integer rate;
