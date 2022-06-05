@@ -5,11 +5,13 @@ import com.example.project1.CustomTemplate.Payload.response.MessageResponse;
 import com.example.project1.CustomTemplate.Validations.ResponseErrorValidation;
 import com.example.project1.Domain.Dictionary.DFoodType;
 import com.example.project1.Domain.Food;
+import com.example.project1.Domain.GeneralOrganization;
 import com.example.project1.Facade.FoodFacade;
 import com.example.project1.Services.FoodService;
 import com.example.project1.dto.FoodDTO;
 
 import com.example.project1.dto.FoodTypeDTO;
+import com.example.project1.dto.GOrganizationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +51,14 @@ public class FoodController {
         return ResponseEntity.ok(new MessageResponse("Food added successfully"));
     }
 
+    @PostMapping("/update")
+    public ResponseEntity<Object> updateFood(@Valid @RequestBody FoodDTO foodDTO, BindingResult bindingResult, Principal principal) {
+        ResponseEntity<Object> errors = responseErrorValidation.mapValidationService(bindingResult);
+        if (!ObjectUtils.isEmpty(errors)) return errors;
+        Food food= foodService.updateFood(foodDTO, principal);
+        FoodDTO dto=foodFacade.foodToFoodDTO(food);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
 
     @GetMapping("/all")
     public ResponseEntity<List<FoodDTO>> getListFood() {
@@ -75,7 +85,7 @@ public class FoodController {
     public ResponseEntity<List<FoodTypeDTO>> getListTypeId() {
         List<FoodTypeDTO> typeDTOList=foodService.getAllFoodType()
                 .stream()
-                .map(foodFacade::foodToFoodTypeDTO)
+                .map(foodFacade::foodTypeToFoodTypeDTO)
                 .collect(Collectors.toList());
 
         return new ResponseEntity<>(typeDTOList,HttpStatus.OK);
@@ -84,7 +94,7 @@ public class FoodController {
     @GetMapping("/type/{id}")
     public ResponseEntity<FoodTypeDTO> getListTypeId(@PathVariable("id") String id) {
         DFoodType type = foodService.getFoodTypeByID(Long.parseLong(id));
-        FoodTypeDTO typeDTO = foodFacade.foodToFoodTypeDTO(type);
+        FoodTypeDTO typeDTO = foodFacade.foodTypeToFoodTypeDTO(type);
         return new ResponseEntity<>(typeDTO, HttpStatus.OK);
     }
 

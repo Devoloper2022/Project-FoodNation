@@ -15,6 +15,6 @@ public class DOrganizationType {
     private Long id;
     private String type;
 
-    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "category")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "category")
     private List<LocalOrganization> organizations;
 }

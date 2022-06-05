@@ -19,21 +19,10 @@ public class LOrganizationFacade {
         lOrganizationDTO.setAddress(organization.getAddress());
         lOrganizationDTO.setManagerID(organization.getManager().getId());
         lOrganizationDTO.setGeneralOrganizationID(organization.getGeneralOrganization().getId());
-        lOrganizationDTO.setCategoryID(convertOrgTypeToLong(organization.getCategory()));
+        lOrganizationDTO.setCategoryID(organization.getCategory().getId());
         lOrganizationDTO.setUrlImage(organization.getUrlImage());
         lOrganizationDTO.setRate(organization.getRate());
         lOrganizationDTO.setUsers(organization.getCounter());
-
         return lOrganizationDTO;
-    }
-
-    private Set<Long> convertOrgTypeToLong(Set<DOrganizationType> list) {
-        Set<Long> types = new HashSet<>();
-
-        Iterator<DOrganizationType> i = list.iterator();
-        while (i.hasNext()) {
-            types.add(i.next().getId());
-        }
-        return types;
     }
 }

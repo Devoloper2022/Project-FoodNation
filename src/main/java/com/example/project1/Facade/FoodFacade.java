@@ -18,13 +18,15 @@ public class FoodFacade {
         foodDTO.setTitle(food.getTitle());
         foodDTO.setDescription(food.getDescription());
         foodDTO.setPrice(food.getPrice());
-        foodDTO.setListType(convertFoodTypeToLong(food.getFoodTypes()));
+        foodDTO.setListType(food.getFoodTypes().getId());
         foodDTO.setUrlImage(food.getUrlImage());
         foodDTO.setRate(food.getRate());
+
+//        foodDTO.setListType(convertFoodTypeToLong(food.getFoodTypes()));
         return foodDTO;
     }
 
-    public FoodTypeDTO foodToFoodTypeDTO(DFoodType foodType){
+    public FoodTypeDTO foodTypeToFoodTypeDTO(DFoodType foodType){
         FoodTypeDTO typeDTO = new FoodTypeDTO();
         typeDTO.setId(foodType.getId());
         typeDTO.setName(foodType.getName());

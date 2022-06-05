@@ -16,5 +16,5 @@ public class FoodDTO {
     private Integer price;
     private Integer rate;
     private String urlImage;
-    private Set<Long> listType =new HashSet<>();
+    private Long listType;
 }

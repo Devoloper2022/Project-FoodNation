@@ -57,16 +57,23 @@ public class LocalOrganizationService {
         manager.getPositions().add(position);
         manager=userRepository.save(manager);
 
+        DOrganizationType orgType=orgTypeRepository.findById(localOrgDTO.getCategoryID()).get();
+        genOrg.getCategory().add(orgType.getType());
+        genOrg= generalOrganizationRepository.save(genOrg);
 
         LocalOrganization localOrganization=new LocalOrganization();
         localOrganization.setAddress(localOrgDTO.getAddress());
         localOrganization.setName(genOrg.getName());
         localOrganization.setManager(manager);
         localOrganization.setGeneralOrganization(genOrg);
-        localOrganization.setCategory(convertLongToOrgType(localOrgDTO.getCategoryID()));
+        localOrganization.setCategory(orgType);
+//        localOrganization.setCategory(convertLongToOrgType(localOrgDTO.getCategoryID()));
         localOrganization.setUrlImage(localOrgDTO.getUrlImage());
         localOrganization.setRate(0.0);
         localOrganization.setCounter(0);
+        localOrganization=localOrganizationRepository.save(localOrganization);
+        manager.setLocalOrganization(localOrganization);
+        userRepository.save(manager);
 
 
         LOG.info("Saving Local Organization for organization" + genOrg.getId());
@@ -85,7 +92,7 @@ public class LocalOrganizationService {
     }
 
     public LocalOrganization updateLocalOrg(LOrganizationDTO localOrgDTO){
-        LocalOrganization localOrg=getLocalOrgByID(localOrgDTO.getId());
+        LocalOrganization localOrg=localOrganizationRepository.findById(localOrgDTO.getId()).get();
         User oldManager=localOrg.getManager();
 
         DPosition position =positionRepository.findByPosition("Manager").get();
@@ -96,15 +103,23 @@ public class LocalOrganizationService {
         Optional<User> FindManager=userRepository.findUserById(localOrgDTO.getManagerID());
         User manager=FindManager.get();
 
+        DOrganizationType orgType=orgTypeRepository.findById(localOrgDTO.getCategoryID()).get();
+
 
         manager.getPositions().add(position);
-        userRepository.save(manager);
+        manager=userRepository.save(manager);
+
+        GeneralOrganization generalOrganization=localOrg.getGeneralOrganization();
+        generalOrganization.getCategory().remove(localOrg.getCategory().getType());
+        generalOrganization.getCategory().add(orgType.getType());
+        generalOrganizationRepository.save(generalOrganization);
+
 
         localOrg.setName(localOrgDTO.getName());
         localOrg.setAddress(localOrgDTO.getAddress());
         localOrg.setManager(manager);
-        localOrg.setCategory(convertLongToOrgType(localOrgDTO.getCategoryID()));
-
+        localOrg.setCategory(orgType);
+//        localOrg.setCategory(convertLongToOrgType(localOrgDTO.getCategoryID()));
         LOG.info("Update Local Organization"+localOrg.getId() +"for organization" + localOrg.getGeneralOrganization().getId());
         return localOrganizationRepository.save(localOrg);
     }

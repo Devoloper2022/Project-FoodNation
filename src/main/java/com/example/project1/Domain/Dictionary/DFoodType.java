@@ -17,7 +17,7 @@ public class DFoodType {
 
     @Column(columnDefinition = "text")
     private String urlImage;
-    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "foodTypes")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "foodTypes")
     private List<Food> foods;
 
 }
