@@ -5,6 +5,7 @@ import com.example.project1.CustomTemplate.Payload.response.MessageResponse;
 import com.example.project1.CustomTemplate.Validations.ResponseErrorValidation;
 import com.example.project1.Domain.OrderDetails;
 import com.example.project1.Facade.OrderFacade;
+import com.example.project1.Facade.dto.ItemDTO;
 import com.example.project1.Services.OrderService;
 import com.example.project1.Facade.dto.OrderDTO;
 import com.google.gson.Gson;
@@ -49,7 +50,7 @@ public class OrderController {
     public ResponseEntity<List<OrderDTO>> getListFood(Principal principal) {
         List<OrderDTO> orderDTO= orderService.getAllUserOrders(principal)
                 .stream()
-                .map(orderFacade::orderToOrderDTO)
+                .map(orderFacade::ordersToOrderDTO)
                 .collect(Collectors.toList());
 
         return new ResponseEntity<>(orderDTO,HttpStatus.OK);
@@ -61,5 +62,16 @@ public class OrderController {
         OrderDetails order = orderService.getByID(Long.parseLong(orderId));
         OrderDTO orderDTO = orderFacade.orderToOrderDTO(order);
         return new ResponseEntity<>(orderDTO, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/all/{orderId}")
+    public ResponseEntity<List<ItemDTO>> getListFood(@PathVariable("orderId") String orderId) {
+        List<ItemDTO> orderDTO= orderService.Orders(Long.parseLong(orderId))
+                .stream()
+                .map(orderFacade::orderDet_FoodToItemDTO)
+                .collect(Collectors.toList());
+
+        return new ResponseEntity<>(orderDTO,HttpStatus.OK);
     }
 }

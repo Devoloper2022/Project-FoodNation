@@ -5,7 +5,7 @@ import com.example.project1.CustomTemplate.Validations.ResponseErrorValidation;
 import com.example.project1.Domain.LocalOrganization;
 import com.example.project1.Facade.LOrganizationFacade;
 import com.example.project1.Services.LocalOrganizationService;
-import com.example.project1.Facade.dto.ItemDTO;
+import com.example.project1.Facade.dto.RateDTO;
 import com.example.project1.Facade.dto.LOrganizationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -81,7 +81,7 @@ public class LOrganizationController {
     }
 
     @PostMapping("/rate")
-    public ResponseEntity<Object> rate(@Valid @RequestBody ItemDTO rateDTO, BindingResult bindingResult, Principal principal) {
+    public ResponseEntity<Object> rate(@Valid @RequestBody RateDTO rateDTO, BindingResult bindingResult, Principal principal) {
         ResponseEntity<Object> errors = responseErrorValidation.mapValidationService(bindingResult);
         if (!ObjectUtils.isEmpty(errors)) return errors;
 
