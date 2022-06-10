@@ -14,7 +14,7 @@ import java.util.Set;
 
 @Data
 @PasswordMatches
-public class StaffDTO {
+public class StaffDTO implements SUserDTO{
     private Long id;
     @NotEmpty
     private String firstname;

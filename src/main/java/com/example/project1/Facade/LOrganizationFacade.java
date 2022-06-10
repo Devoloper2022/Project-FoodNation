@@ -13,6 +13,7 @@ public class LOrganizationFacade {
         lOrganizationDTO.setName(organization.getName());
         lOrganizationDTO.setAddress(organization.getAddress());
         lOrganizationDTO.setManagerID(organization.getManager().getId());
+        lOrganizationDTO.setDescription(organization.getGeneralOrganization().getDescription());
         lOrganizationDTO.setGeneralOrganizationID(organization.getGeneralOrganization().getId());
         lOrganizationDTO.setCategoryID(organization.getCategory().getId());
         lOrganizationDTO.setUrlImage(organization.getUrlImage());

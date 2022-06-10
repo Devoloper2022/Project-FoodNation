@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 
 @Data
 @PasswordMatches
-public class UserDTO {
+public class UserDTO implements SUserDTO{
      private Long id;
      @NotEmpty
      private String firstname;
