@@ -17,7 +17,6 @@ import java.util.*;
 @Service
 public class OrderService {
     public static final Logger LOG = LoggerFactory.getLogger(OrderService.class);
-
     private final UserRepository userRepository;
     private final OrderDetailsRepository orderDetAilsRepository;
     private final OrdersRepository ordersRepository;
