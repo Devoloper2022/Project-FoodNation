@@ -15,6 +15,7 @@ public class LOrganizationDTO {
     private String urlImage;
     private Double Rate;
     private Integer users;
+    private String description;
     private Long generalOrganizationID;
     private Long categoryID;
 

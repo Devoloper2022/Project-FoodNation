@@ -3,6 +3,7 @@ package com.example.project1.Controllers;
 import com.example.project1.CustomTemplate.Validations.ResponseErrorValidation;
 import com.example.project1.Domain.User;
 import com.example.project1.Facade.UserFacade;
+import com.example.project1.Facade.dto.SUserDTO;
 import com.example.project1.Services.StaffService;
 import com.example.project1.Facade.dto.StaffDTO;
 import com.example.project1.Facade.dto.UserDTO;
@@ -30,10 +31,16 @@ public class StaffController {
     private ResponseErrorValidation responseErrorValidation;
 
     @GetMapping("/")
-    public ResponseEntity<StaffDTO> getCurrentStaff(Principal principal){
+    public ResponseEntity<SUserDTO> getCurrentStaff(Principal principal){
         User user =staffService.getCurrentUser(principal);
-        StaffDTO staffDTO=userFacade.userToStaffDTO(user);
-        return new ResponseEntity<>(staffDTO, HttpStatus.OK);
+        SUserDTO userDTO=null;
+        if (user.getPositions().isEmpty()){
+            userDTO=userFacade.userToAdminDTO(user);
+        }else {
+             userDTO=userFacade.userToStaffDTO(user);
+        }
+
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
     @GetMapping("/{userId}")

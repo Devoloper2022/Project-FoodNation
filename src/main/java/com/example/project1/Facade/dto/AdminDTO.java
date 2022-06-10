@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 
 @Data
 @PasswordMatches
-public class AdminDTO {
+public class AdminDTO implements SUserDTO{
     private Long id;
     @NotEmpty
     private String firstname;
@@ -23,6 +23,8 @@ public class AdminDTO {
 
     @Email(message = "It should have email format")
     private String email;
+
+    private String name;
 
     @NotEmpty(message = "Password is required")
     @Size(min = 6, max = 10)
