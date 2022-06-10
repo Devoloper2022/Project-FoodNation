@@ -13,5 +13,5 @@ public class OrderDTO {
     private Long orgID;
     private int totalCost;
     private LocalDateTime localDateTime;
-   private Map<Long,Long> Cart;
+   private Map<Long,Long> MenuItems;
 }
