@@ -5,7 +5,7 @@ import com.example.project1.CustomTemplate.Validations.ResponseErrorValidation;
 import com.example.project1.Domain.LocalOrganization;
 import com.example.project1.Facade.LOrganizationFacade;
 import com.example.project1.Services.LocalOrganizationService;
-import com.example.project1.dto.ItemDTO;
+import com.example.project1.Facade.dto.ItemDTO;
 import com.example.project1.Facade.dto.LOrganizationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
