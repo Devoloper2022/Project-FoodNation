@@ -19,7 +19,7 @@ public class OrderFacade {
         orderDTO.setId(order.getId());
         orderDTO.setUserID(order.getCustomer().getId());
         orderDTO.setAddress(order.getAddress());
-            orderDTO.setMenuItems(convert(order.getOrderList()));
+        orderDTO.setMenuItems(convert(order.getOrderList()));
         orderDTO.setLocalDateTime(order.getLocalDateTime());
         orderDTO.setTotalCost(order.getTotalCost());
         orderDTO.setOrgID(order.getGenOrganization().getId());
