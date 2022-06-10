@@ -32,7 +32,7 @@ public class Reservation {
     private LocalOrganization localOrganization;
 
     @Column
-    private  boolean delete;
+    private  Boolean delete;
 
 
 

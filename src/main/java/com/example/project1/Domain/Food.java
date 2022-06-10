@@ -38,7 +38,7 @@ public class Food {
     private GeneralOrganization organization;
 
     @Column
-    private  boolean delete;
+    private  Boolean delete;
 
     public Food() {
     }

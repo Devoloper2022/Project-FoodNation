@@ -76,6 +76,7 @@ public class GeneralOrganizationService {
         generalOrganization.setManager(founder);
         generalOrganization.setUrlImage(genOrg.getUrlImage());
         generalOrganization.getCategory().add(orgType.getType());
+        generalOrganization.setDelete(false);
         //Saving gen org into DB and getting with ID
         GeneralOrganization organization = generalOrganizationRepository.save(generalOrganization);
         founder.setGeneralOrganization(organization);

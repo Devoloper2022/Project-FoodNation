@@ -27,7 +27,7 @@ public class OrderDetails {
     private boolean Status;
 
     @Column
-    private  boolean delete;
+    private  Boolean delete;
 
     private int totalCost;
 

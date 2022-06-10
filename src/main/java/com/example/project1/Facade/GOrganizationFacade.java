@@ -14,6 +14,7 @@ public class GOrganizationFacade {
         organizationDTO.setName(organization.getName());
         organizationDTO.setDescription(organization.getDescription());
         organizationDTO.setManagerID(organization.getManager().getId());
+        organizationDTO.setFoodsType(organization.getFoodType());
         organizationDTO.setUrlImage(organization.getUrlImage());
         organizationDTO.setCategory(organization.getCategory());
 

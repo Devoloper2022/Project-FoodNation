@@ -28,7 +28,7 @@ public class Comment {
     private LocalOrganization localOrganization;
 
     @Column
-    private  boolean delete;
+    private  Boolean delete;
 
 
     @PrePersist
