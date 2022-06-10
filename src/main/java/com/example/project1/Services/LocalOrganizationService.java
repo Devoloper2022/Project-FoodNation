@@ -7,8 +7,9 @@ import com.example.project1.Domain.GeneralOrganization;
 import com.example.project1.Domain.LocalOrganization;
 
 import com.example.project1.Domain.User;
+import com.example.project1.Facade.dto.ItemDTO;
 import com.example.project1.Repository.*;
-import com.example.project1.dto.ItemDTO;
+import com.example.project1.Facade.dto.ItemDTO;
 import com.example.project1.Facade.dto.LOrganizationDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.*;
 
@@ -127,7 +129,7 @@ public class LocalOrganizationService {
         return localOrganizationRepository.save(localOrg);
     }
 
-    public LocalOrganization rateOrg(ItemDTO rate,Principal principal){
+    public LocalOrganization rateOrg(@Valid ItemDTO rate, Principal principal){
         User user=getUserByPrincipal(principal);
         LocalOrganization org=localOrganizationRepository.findLocalOrganizationById(rate.getOrgID()).get();
 
