@@ -1,4 +1,4 @@
-package com.example.project1.dto;
+package com.example.project1.Facade.dto;
 
 import lombok.Data;
 
@@ -15,4 +15,5 @@ public class GOrganizationDTO {
     private String urlImage;
     private Long managerID;
     private Set<String> category;
+    private Set<String> foodsType;
 }

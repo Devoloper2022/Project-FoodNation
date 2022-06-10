@@ -26,6 +26,9 @@ public class OrderDetails {
     @Column
     private boolean Status;
 
+    @Column
+    private  boolean delete;
+
     private int totalCost;
 
 //    @ManyToOne(fetch = FetchType.LAZY)

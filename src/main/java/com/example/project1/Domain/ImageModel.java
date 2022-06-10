@@ -23,4 +23,7 @@ public class ImageModel {
     private Long OrgId;
     @JsonIgnore
     private Long FoodId;
+
+    @Column
+    private  boolean delete;
 }

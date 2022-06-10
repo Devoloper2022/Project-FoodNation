@@ -1,4 +1,4 @@
-package com.example.project1.dto;
+package com.example.project1.Facade.dto;
 
 
 import lombok.Data;

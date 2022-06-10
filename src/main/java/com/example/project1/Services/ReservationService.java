@@ -8,7 +8,7 @@ import com.example.project1.Repository.LocalOrganizationRepository;
 import com.example.project1.Repository.OrderDetailsRepository;
 import com.example.project1.Repository.ReservationRepository;
 import com.example.project1.Repository.UserRepository;
-import com.example.project1.dto.ReservationDTO;
+import com.example.project1.Facade.dto.ReservationDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -27,6 +27,9 @@ public class Comment {
     @JoinColumn(name = "localOrganizationID")
     private LocalOrganization localOrganization;
 
+    @Column
+    private  boolean delete;
+
 
     @PrePersist
     protected void onCreated(){

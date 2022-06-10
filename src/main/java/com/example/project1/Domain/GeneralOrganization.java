@@ -27,6 +27,9 @@ public class GeneralOrganization {
     @ElementCollection(targetClass = String.class)
     private Set<String> category=new HashSet<>();
 
+    @ElementCollection(targetClass = String.class)
+    private Set<String> foodType=new HashSet<>();
+
     @OneToOne
     @JoinColumn(name = "managerID", nullable = false)
     private User manager;
@@ -42,6 +45,9 @@ public class GeneralOrganization {
 
     @OneToMany(mappedBy = "genOrganization")
     private List<OrderDetails> orderList;
+
+    @Column
+    private  boolean delete;
 
     public GeneralOrganization() {
     }

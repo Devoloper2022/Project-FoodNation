@@ -31,6 +31,9 @@ public class Reservation {
     @JoinColumn(name = "localOrganizationID", nullable = false)
     private LocalOrganization localOrganization;
 
+    @Column
+    private  boolean delete;
+
 
 
 }

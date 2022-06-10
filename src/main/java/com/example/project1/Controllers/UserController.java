@@ -5,7 +5,7 @@ import com.example.project1.CustomTemplate.Validations.ResponseErrorValidation;
 import com.example.project1.Domain.User;
 import com.example.project1.Facade.UserFacade;
 import com.example.project1.Services.UserService;
-import com.example.project1.dto.UserDTO;
+import com.example.project1.Facade.dto.UserDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;

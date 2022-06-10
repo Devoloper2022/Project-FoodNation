@@ -9,7 +9,7 @@ import com.example.project1.Domain.GeneralOrganization;
 import com.example.project1.Domain.LocalOrganization;
 import com.example.project1.Domain.User;
 import com.example.project1.Repository.*;
-import com.example.project1.dto.GOrganizationDTO;
+import com.example.project1.Facade.dto.GOrganizationDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
