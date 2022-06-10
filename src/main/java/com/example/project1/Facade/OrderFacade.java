@@ -16,6 +16,7 @@ public class OrderFacade {
     public OrderDTO orderToOrderDTO(OrderDetails order) {
         OrderDTO orderDTO = new OrderDTO();
 
+
         orderDTO.setId(order.getId());
         orderDTO.setUserID(order.getCustomer().getId());
         orderDTO.setAddress(order.getAddress());
