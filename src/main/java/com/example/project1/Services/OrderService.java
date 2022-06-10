@@ -61,11 +61,24 @@ public class OrderService {
         return orderDetAilsRepository.findById(id).get();
     }
 
+
+
+
+
+
     public List<OrderDetails> getAllUserOrders(Principal principal) {
         User user = getUserByPrincipal(principal);
-        return orderDetAilsRepository.findByCustomerOrderByLocalDateTimeDesc(user);
+        List<OrderDetails> menuItems = orderDetAilsRepository.findByCustomerOrderByLocalDateTimeDesc(user);
+        Iterator<OrderDetails> i = menuItems.iterator();
+        while (i.hasNext()) {
+           i.next().setOrderList(
+                   convertID(
+                           i.next()
+                   )
+           );
+        }
+        return menuItems;
     }
-
 
 
     private User getUserByPrincipal(Principal principal) {
@@ -80,7 +93,6 @@ public class OrderService {
 
         OrderDetails details = orderDetAilsRepository.findById(id).get();
 
-        System.out.println("Sonik " + cart);
         Set set = cart.entrySet();
         Iterator<Map> i = set.iterator();
 
@@ -94,4 +106,10 @@ public class OrderService {
             ordersRepository.save(orders);
         }
     }
+
+    private List<OrdersDetails_food> convertID(OrderDetails details) {
+        return ordersRepository.findOrdersDetails_foodByOrderDetails(details);
+    }
+
+
 }
