@@ -11,6 +11,6 @@ import java.util.Optional;
 @Repository
 public interface OrdersRepository extends CrudRepository<OrdersDetails_food, Long> {
     Optional<OrdersDetails_food> findOrdersById(Long id);
-    List<OrdersDetails_food> findOrdersDetails_foodByOrderDetails(OrderDetails details);
 
+    List<OrdersDetails_food> findOrdersDetails_foodByOrderDetails(OrderDetails details);
 }
