@@ -60,28 +60,20 @@ public class OrderService {
     }
 
     public OrderDetails getByID(Long id) {
-        return orderDetAilsRepository.findById(id).get();
+        List<OrdersDetails_food> orders=Orders(id);
+        OrderDetails orderDetails=orderDetAilsRepository.findById(id).get();
+        orderDetails.setOrderList(orders);
+        return  orderDetails;
     }
 
-    public List<OrderDetails> getAllUserOrders(Principal principal) {
-        User user = getUserByPrincipal(principal);
-        List<OrderDetails> menuItems = orderDetAilsRepository.findByCustomerOrderByLocalDateTimeDesc(user);
-        Iterator<OrderDetails> i = menuItems.iterator();
+    public List<OrderDetails> getAllUserOrders(Principal principal){
+        User user=getUserByPrincipal(principal);
+        return  orderDetAilsRepository.findByCustomerOrderByLocalDateTimeDesc(user);
+    }
 
-        while (i.hasNext()) {
-            if (i.next().getOrderList().isEmpty()){
-                menuItems.remove(i.next());
-            }else {
-                i.next().setOrderList(
-                        convertID(
-                                i.next()
-                        )
-                );
-            }
-
-        }
-
-        return menuItems;
+   public List<OrdersDetails_food> Orders(Long id ){
+        OrderDetails details = orderDetAilsRepository.findById(id).get();
+        return ordersRepository.findOrdersDetails_foodByOrderDetails(details);
     }
 
     private User getUserByPrincipal(Principal principal) {
@@ -110,9 +102,31 @@ public class OrderService {
         }
     }
 
-    private List<OrdersDetails_food> convertID(OrderDetails details) {
-        return ordersRepository.findOrdersDetails_foodByOrderDetails(details);
-    }
+//    public List<OrderDetails> getAllUserOrders(Principal principal) {
+//
+//        User user = getUserByPrincipal(principal);
+//        List<OrderDetails> menuItems = orderDetAilsRepository.findByCustomerOrderByLocalDateTimeDesc(user);
+//        Iterator<OrderDetails> i = menuItems.iterator();
+//
+//
+//        while (i.hasNext()) {
+//            if (i.next().getOrderList().isEmpty()){
+//                menuItems.remove(i.next());
+//            }else {
+//                i.next().setOrderList(
+//                        convertID(
+//                                i.next()
+//                        )
+//                );
+//            }
+//
+//        }
+//
+//        return menuItems;
+//    }
+//    private List<OrdersDetails_food> convertID(OrderDetails details) {
+//        return ordersRepository.findOrdersDetails_foodByOrderDetails(details);
+//    }
 
 
 }

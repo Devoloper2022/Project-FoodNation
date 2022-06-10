@@ -7,9 +7,8 @@ import com.example.project1.Domain.GeneralOrganization;
 import com.example.project1.Domain.LocalOrganization;
 
 import com.example.project1.Domain.User;
-import com.example.project1.Facade.dto.ItemDTO;
+import com.example.project1.Facade.dto.RateDTO;
 import com.example.project1.Repository.*;
-import com.example.project1.Facade.dto.ItemDTO;
 import com.example.project1.Facade.dto.LOrganizationDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -129,7 +128,7 @@ public class LocalOrganizationService {
         return localOrganizationRepository.save(localOrg);
     }
 
-    public LocalOrganization rateOrg(@Valid ItemDTO rate, Principal principal){
+    public LocalOrganization rateOrg(@Valid RateDTO rate, Principal principal){
         User user=getUserByPrincipal(principal);
         LocalOrganization org=localOrganizationRepository.findLocalOrganizationById(rate.getOrgID()).get();
 
