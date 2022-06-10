@@ -47,7 +47,7 @@ public class GeneralOrganization {
     private List<OrderDetails> orderList;
 
     @Column
-    private  boolean delete;
+    private  Boolean delete;
 
     public GeneralOrganization() {
     }

@@ -58,7 +58,7 @@ public class User implements UserDetails {
     private List<Reservation> reservationList;
 
     @Column
-    private  boolean delete;
+    private  Boolean delete;
 
     @Transient
     private Collection<? extends GrantedAuthority> authorities;

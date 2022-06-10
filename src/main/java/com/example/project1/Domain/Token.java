@@ -17,5 +17,5 @@ public class Token {
     private boolean Status;
 
     @Column
-    private  boolean delete;
+    private  Boolean delete;
 }

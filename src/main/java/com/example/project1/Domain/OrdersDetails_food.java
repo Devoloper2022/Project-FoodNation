@@ -20,7 +20,7 @@ public class OrdersDetails_food {
     private OrderDetails orderDetails;
 
     @Column
-    private  boolean delete;
+    private  Boolean delete;
 
     public OrdersDetails_food() {
     }

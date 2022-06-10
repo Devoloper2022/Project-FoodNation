@@ -59,7 +59,7 @@ public class LocalOrganization {
     private Set<String> ratedUser=new HashSet<>();
 
     @Column
-    private  boolean delete;
+    private  Boolean delete;
 
     public LocalOrganization() {
     }

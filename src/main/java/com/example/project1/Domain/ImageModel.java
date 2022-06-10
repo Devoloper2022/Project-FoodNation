@@ -25,5 +25,5 @@ public class ImageModel {
     private Long FoodId;
 
     @Column
-    private  boolean delete;
+    private  Boolean delete;
 }

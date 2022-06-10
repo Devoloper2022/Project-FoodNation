@@ -10,5 +10,5 @@ public class Document {
     private String name;
     private String author;
     @Column
-    private  boolean delete;
+    private  Boolean delete;
 }
