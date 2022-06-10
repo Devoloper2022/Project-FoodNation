@@ -24,6 +24,7 @@ public class OrderService {
     private final GeneralOrganizationRepository genRepository;
     private final FoodRepository foodRepository;
 
+
     @Autowired
     public OrderService(UserRepository userRepository, OrderDetailsRepository orderDetAilsRepository, OrdersRepository ordersRepository, GeneralOrganizationRepository genRepository, FoodRepository foodRepository) {
         this.userRepository = userRepository;
@@ -83,7 +84,7 @@ public class OrderService {
                         UsernameNotFoundException("User not found with username: " + username));
     }
 
-    private void createCard(Long id, Map<Long, Long> cart) {
+    private void  createCard (Long id, Map<Long, Long> cart) {
         List<OrdersDetails_food> list = new ArrayList<>();
 
         OrderDetails details = orderDetAilsRepository.findById(id).get();
