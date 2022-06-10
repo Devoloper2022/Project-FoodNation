@@ -2,6 +2,7 @@ package com.example.project1.Facade;
 
 import com.example.project1.Domain.Dictionary.DPosition;
 import com.example.project1.Domain.User;
+import com.example.project1.Facade.dto.AdminDTO;
 import com.example.project1.Facade.dto.StaffDTO;
 import com.example.project1.Facade.dto.UserDTO;
 import org.springframework.stereotype.Component;
@@ -46,5 +47,17 @@ public class UserFacade {
             positions.add(i.next().getId());
         }
         return positions;
+    }
+
+
+    public AdminDTO userToAdminDTO(User user){
+        AdminDTO userDTO= new AdminDTO();
+        userDTO.setId(user.getId());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setFirstname(user.getFirstName());
+        userDTO.setLastname(user.getSecondName());
+        userDTO.setUsername(user.getUsername());
+
+        return userDTO;
     }
 }

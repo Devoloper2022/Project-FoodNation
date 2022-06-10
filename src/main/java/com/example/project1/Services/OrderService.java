@@ -44,7 +44,7 @@ public class OrderService {
 
         details = orderDetAilsRepository.save(details);
 
-        createCard(details.getId(), orderDTO.getCart());
+        createCard(details.getId(), orderDTO.getMenuItems());
 
         LOG.info("Order {} ", user.getEmail() + " " + details.getId());
         return orderDetAilsRepository.save(details);
@@ -65,6 +65,7 @@ public class OrderService {
         User user = getUserByPrincipal(principal);
         return orderDetAilsRepository.findByCustomerOrderByLocalDateTimeDesc(user);
     }
+
 
 
     private User getUserByPrincipal(Principal principal) {

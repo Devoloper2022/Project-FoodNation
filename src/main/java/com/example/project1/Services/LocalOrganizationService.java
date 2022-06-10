@@ -161,6 +161,13 @@ public class LocalOrganizationService {
         return (List<LocalOrganization>) localOrganizationRepository.findAll();
     }
 
+
+    public List<LocalOrganization> getLocalForCEO(Principal principal){
+        User user =getUserByPrincipal(principal);
+        return localOrganizationRepository.findByGeneralOrganization(user.getGeneralOrganization());
+    }
+
+
     private Set<DOrganizationType> convertLongToOrgType(Set<Long> list) {
         Set<DOrganizationType> types = new HashSet<>();
 

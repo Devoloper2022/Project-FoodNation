@@ -89,4 +89,13 @@ public class LOrganizationController {
         LOrganizationDTO organizationUpdated = organizationFacade.LOtoLODTO(organization);
         return new ResponseEntity<>(organizationUpdated, HttpStatus.OK);
     }
+
+    @GetMapping("/ceoall")
+    public ResponseEntity<List<LOrganizationDTO>> getListLOForCEO(Principal principal) {
+        List<LOrganizationDTO> loDTOList=organizationService.getLocalForCEO(principal)
+                .stream()
+                .map(organizationFacade::LOtoLODTO)
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(loDTOList,HttpStatus.OK);
+    }
 }
