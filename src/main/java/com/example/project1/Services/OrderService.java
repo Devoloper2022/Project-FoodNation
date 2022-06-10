@@ -67,13 +67,20 @@ public class OrderService {
         User user = getUserByPrincipal(principal);
         List<OrderDetails> menuItems = orderDetAilsRepository.findByCustomerOrderByLocalDateTimeDesc(user);
         Iterator<OrderDetails> i = menuItems.iterator();
+
         while (i.hasNext()) {
-            i.next().setOrderList(
-                    convertID(
-                            i.next()
-                    )
-            );
+            if (i.next().getOrderList().isEmpty()){
+                menuItems.remove(i.next());
+            }else {
+                i.next().setOrderList(
+                        convertID(
+                                i.next()
+                        )
+                );
+            }
+
         }
+
         return menuItems;
     }
 
