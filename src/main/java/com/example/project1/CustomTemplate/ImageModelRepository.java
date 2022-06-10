@@ -1,4 +1,4 @@
-package com.example.project1.Repository;
+package com.example.project1.CustomTemplate;
 
 import com.example.project1.Domain.ImageModel;
 import org.springframework.data.jpa.repository.JpaRepository;

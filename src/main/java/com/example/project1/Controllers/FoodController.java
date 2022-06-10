@@ -5,13 +5,11 @@ import com.example.project1.CustomTemplate.Payload.response.MessageResponse;
 import com.example.project1.CustomTemplate.Validations.ResponseErrorValidation;
 import com.example.project1.Domain.Dictionary.DFoodType;
 import com.example.project1.Domain.Food;
-import com.example.project1.Domain.GeneralOrganization;
 import com.example.project1.Facade.FoodFacade;
 import com.example.project1.Services.FoodService;
-import com.example.project1.dto.FoodDTO;
+import com.example.project1.Facade.dto.FoodDTO;
 
-import com.example.project1.dto.FoodTypeDTO;
-import com.example.project1.dto.GOrganizationDTO;
+import com.example.project1.Facade.dto.FoodTypeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -58,6 +58,9 @@ public class LocalOrganization {
     @ElementCollection(targetClass = String.class)
     private Set<String> ratedUser=new HashSet<>();
 
+    @Column
+    private  boolean delete;
+
     public LocalOrganization() {
     }
 

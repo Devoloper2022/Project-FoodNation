@@ -1,4 +1,4 @@
-package com.example.project1.Services;
+package com.example.project1.CustomTemplate;
 
 //import com.example.project1.Domain.Food;
 //import com.example.project1.Domain.GeneralOrganization;

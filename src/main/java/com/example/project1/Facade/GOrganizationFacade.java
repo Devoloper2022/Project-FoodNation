@@ -2,8 +2,7 @@ package com.example.project1.Facade;
 
 import com.example.project1.Domain.GeneralOrganization;
 
-import com.example.project1.dto.GOrganizationDTO;
-import com.example.project1.dto.LOrganizationDTO;
+import com.example.project1.Facade.dto.GOrganizationDTO;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -9,7 +9,7 @@ import com.example.project1.Domain.LocalOrganization;
 import com.example.project1.Domain.User;
 import com.example.project1.Repository.*;
 import com.example.project1.dto.ItemDTO;
-import com.example.project1.dto.LOrganizationDTO;
+import com.example.project1.Facade.dto.LOrganizationDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,7 +93,10 @@ public class LocalOrganizationService {
 
     public LocalOrganization updateLocalOrg(LOrganizationDTO localOrgDTO){
         LocalOrganization localOrg=localOrganizationRepository.findById(localOrgDTO.getId()).get();
-        User oldManager=localOrg.getManager();
+        User oldManager=userRepository.findUserById(localOrgDTO.getManagerID()).get();
+
+        localOrg.setManager(null);
+        localOrg=localOrganizationRepository.save(localOrg);
 
         DPosition position =positionRepository.findByPosition("Manager").get();
 

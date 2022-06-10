@@ -2,14 +2,13 @@ package com.example.project1.Services;
 
 import com.example.project1.CustomTemplate.Payload.request.StaffAddRequest;
 import com.example.project1.CustomTemplate.exceptions.UserExistException;
-import com.example.project1.Domain.Dictionary.DFoodType;
 import com.example.project1.Domain.Dictionary.DPosition;
 import com.example.project1.Domain.Dictionary.DRole;
 import com.example.project1.Domain.GeneralOrganization;
 import com.example.project1.Domain.LocalOrganization;
 import com.example.project1.Domain.User;
 import com.example.project1.Repository.*;
-import com.example.project1.dto.StaffDTO;
+import com.example.project1.Facade.dto.StaffDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,8 +2,8 @@ package com.example.project1.Facade;
 
 import com.example.project1.Domain.Dictionary.DFoodType;
 import com.example.project1.Domain.Food;
-import com.example.project1.dto.FoodDTO;
-import com.example.project1.dto.FoodTypeDTO;
+import com.example.project1.Facade.dto.FoodDTO;
+import com.example.project1.Facade.dto.FoodTypeDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;

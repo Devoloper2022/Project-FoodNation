@@ -37,6 +37,9 @@ public class Food {
     @JoinColumn(name = "generalOrganizationID", nullable = false)
     private GeneralOrganization organization;
 
+    @Column
+    private  boolean delete;
+
     public Food() {
     }
 }

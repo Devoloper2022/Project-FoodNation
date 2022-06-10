@@ -1,9 +1,8 @@
 package com.example.project1.Facade;
 
-import com.example.project1.Domain.Dictionary.DOrganizationType;
 import com.example.project1.Domain.OrderDetails;
 import com.example.project1.Domain.OrdersDetails_food;
-import com.example.project1.dto.OrderDTO;
+import com.example.project1.Facade.dto.OrderDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;

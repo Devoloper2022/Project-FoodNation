@@ -4,7 +4,7 @@ import com.example.project1.CustomTemplate.Validations.ResponseErrorValidation;
 import com.example.project1.Domain.GeneralOrganization;
 import com.example.project1.Facade.GOrganizationFacade;
 import com.example.project1.Services.GeneralOrganizationService;
-import com.example.project1.dto.GOrganizationDTO;
+import com.example.project1.Facade.dto.GOrganizationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

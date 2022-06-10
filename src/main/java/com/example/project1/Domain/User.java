@@ -57,6 +57,8 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "customer")
     private List<Reservation> reservationList;
 
+    @Column
+    private  boolean delete;
 
     @Transient
     private Collection<? extends GrantedAuthority> authorities;

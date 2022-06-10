@@ -2,8 +2,8 @@ package com.example.project1.Facade;
 
 import com.example.project1.Domain.Dictionary.DPosition;
 import com.example.project1.Domain.User;
-import com.example.project1.dto.StaffDTO;
-import com.example.project1.dto.UserDTO;
+import com.example.project1.Facade.dto.StaffDTO;
+import com.example.project1.Facade.dto.UserDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;

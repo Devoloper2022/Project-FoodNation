@@ -1,12 +1,11 @@
 package com.example.project1.Services;
 
 import com.example.project1.CustomTemplate.exceptions.UserExistException;
-import com.example.project1.Domain.Dictionary.DRole;
 import com.example.project1.Domain.User;
 import com.example.project1.Repository.RoleRepository;
 import com.example.project1.Repository.UserRepository;
 import com.example.project1.CustomTemplate.Payload.request.SignUpRequest;
-import com.example.project1.dto.UserDTO;
+import com.example.project1.Facade.dto.UserDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

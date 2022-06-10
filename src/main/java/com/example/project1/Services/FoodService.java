@@ -8,8 +8,7 @@ import com.example.project1.Repository.FoodTypeRepository;
 import com.example.project1.Repository.FoodRepository;
 import com.example.project1.Repository.GeneralOrganizationRepository;
 import com.example.project1.Repository.UserRepository;
-import com.example.project1.dto.FoodDTO;
-import com.example.project1.dto.ItemDTO;
+import com.example.project1.Facade.dto.FoodDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,15 +41,19 @@ public class FoodService {
 
 
     public Food createFood(FoodDTO foodDTO, Principal principal) {
-        GeneralOrganization organization = getUserByPrincipal(principal).getLocalOrganization().getGeneralOrganization();
+        User user =getUserByPrincipal(principal);
+        GeneralOrganization organization = GORepository.findById(user.getGeneralOrganization().getId()).get();
        DFoodType foodType=foodTypeRepository.findById(foodDTO.getListType()).get();
+
+       organization.getFoodType().add(foodType.getName());//
+       GORepository.save(organization);//
 
         Food food = new Food();
         food.setTitle(foodDTO.getTitle());
         food.setDescription(foodDTO.getDescription());
         food.setPrice(foodDTO.getPrice());
         food.setRate(0);
-//        food.setFoodTypes(convertLongToFoodType(foodDTO.getListType()));
+
         food.setFoodTypes(foodType);
         food.setOrganization(organization);
         food.setUrlImage(foodDTO.getUrlImage());

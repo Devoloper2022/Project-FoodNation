@@ -19,6 +19,9 @@ public class OrdersDetails_food {
     @JoinColumn(name = "orderDetailsID", nullable = false)
     private OrderDetails orderDetails;
 
+    @Column
+    private  boolean delete;
+
     public OrdersDetails_food() {
     }
 }

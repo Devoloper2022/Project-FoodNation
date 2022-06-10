@@ -15,4 +15,7 @@ public class Token {
     @Column(length = 350)
     private String Token;
     private boolean Status;
+
+    @Column
+    private  boolean delete;
 }

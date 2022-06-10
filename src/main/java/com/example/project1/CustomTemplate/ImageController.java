@@ -1,4 +1,4 @@
-package com.example.project1.Controllers;
+package com.example.project1.CustomTemplate;
 
 //import com.example.project1.CustomTemplate.Payload.response.MessageResponse;
 //import com.example.project1.Domain.ImageModel;
