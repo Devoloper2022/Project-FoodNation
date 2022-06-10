@@ -14,10 +14,10 @@ import java.security.Principal;
 import java.util.*;
 
 
-
 @Service
 public class OrderService {
     public static final Logger LOG = LoggerFactory.getLogger(OrderService.class);
+
     private final UserRepository userRepository;
     private final OrderDetailsRepository orderDetAilsRepository;
     private final OrdersRepository ordersRepository;
@@ -51,36 +51,30 @@ public class OrderService {
         return orderDetAilsRepository.save(details);
     }
 
-    public OrderDetails changeStatus(Long id){
+    public OrderDetails changeStatus(Long id) {
 
-        OrderDetails order=orderDetAilsRepository.findById(id).get();
+        OrderDetails order = orderDetAilsRepository.findById(id).get();
         order.setStatus(true);
-        return  orderDetAilsRepository.save(order);
+        return orderDetAilsRepository.save(order);
     }
 
     public OrderDetails getByID(Long id) {
         return orderDetAilsRepository.findById(id).get();
     }
 
-
-
-
-
-
     public List<OrderDetails> getAllUserOrders(Principal principal) {
         User user = getUserByPrincipal(principal);
         List<OrderDetails> menuItems = orderDetAilsRepository.findByCustomerOrderByLocalDateTimeDesc(user);
         Iterator<OrderDetails> i = menuItems.iterator();
         while (i.hasNext()) {
-           i.next().setOrderList(
-                   convertID(
-                           i.next()
-                   )
-           );
+            i.next().setOrderList(
+                    convertID(
+                            i.next()
+                    )
+            );
         }
         return menuItems;
     }
-
 
     private User getUserByPrincipal(Principal principal) {
         String username = principal.getName();
