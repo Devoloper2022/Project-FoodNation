@@ -76,6 +76,12 @@ public class OrderService {
         return ordersRepository.findOrdersDetails_foodByOrderDetails(details);
     }
 
+    public List<OrderDetails> getAllGOOrders(Principal principal){
+        User user=getUserByPrincipal(principal);
+        GeneralOrganization organization=user.getGeneralOrganization();
+        return  orderDetAilsRepository.findAllByGenOrganization(organization);
+    }
+
     private User getUserByPrincipal(Principal principal) {
         String username = principal.getName();
         return userRepository.findUserByUsername(username)
@@ -101,6 +107,8 @@ public class OrderService {
             ordersRepository.save(orders);
         }
     }
+
+
 
 //    public List<OrderDetails> getAllUserOrders(Principal principal) {
 //

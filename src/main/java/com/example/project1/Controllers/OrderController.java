@@ -56,6 +56,15 @@ public class OrderController {
         return new ResponseEntity<>(orderDTO,HttpStatus.OK);
     }
 
+    @GetMapping("/all/go")
+    public ResponseEntity<List<OrderDTO>> getListOrder(Principal principal) {
+        List<OrderDTO> orderDTO= orderService.getAllGOOrders(principal)
+                .stream()
+                .map(orderFacade::ordersToOrderDTO)
+                .collect(Collectors.toList());
+
+        return new ResponseEntity<>(orderDTO,HttpStatus.OK);
+    }
 
     @GetMapping("/{orderId}")
     public ResponseEntity<OrderDTO> getFoodDetails(@PathVariable("orderId") String orderId) {
