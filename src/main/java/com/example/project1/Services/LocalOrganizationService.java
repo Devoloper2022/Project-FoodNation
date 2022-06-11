@@ -179,6 +179,10 @@ public class LocalOrganizationService {
         return types;
     }
 
+    public  DOrganizationType getOrgType(Long id){
+        return  orgTypeRepository.findById(id).get();
+    }
+
     private User getUserByPrincipal(Principal principal){
         String username =principal.getName();
         return userRepository.findUserByUsername(username)
